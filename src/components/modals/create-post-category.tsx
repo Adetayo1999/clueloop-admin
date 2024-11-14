@@ -11,6 +11,7 @@ import services from "../../services";
 import { useMutation, useQueryClient } from "react-query";
 import { PostCategoryType } from "../../lib/types";
 import { useModal } from "../../context/modal";
+import toast from "react-hot-toast";
 
 export const CreatePostCategory: React.FC<{
   data?: PostCategoryType;
@@ -50,7 +51,10 @@ export const CreatePostCategory: React.FC<{
       mutation
         .mutateAsync(updatedData)
         .then(() => {
-          console.log("post category updated.");
+          toast.success("post category updated.");
+        })
+        .catch(() => {
+          toast.error("something went wrong, try again");
         })
         .finally(() => {
           reset();
@@ -63,7 +67,10 @@ export const CreatePostCategory: React.FC<{
     mutation
       .mutateAsync(values)
       .then(() => {
-        console.log("post category created.");
+        toast.success("post category created.");
+      })
+      .catch(() => {
+        toast.error("something went wrong, try again");
       })
       .finally(() => reset());
   };

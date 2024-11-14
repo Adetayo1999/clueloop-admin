@@ -14,6 +14,7 @@ import { useModal } from "../../context/modal";
 import CustomTextarea from "../textarea";
 import { fetchUserData } from "../../lib/storage";
 import CustomSelect from "../custom-select";
+import toast from "react-hot-toast";
 
 export const CreateEvent: React.FC<{
   data?: EventType;
@@ -68,7 +69,10 @@ export const CreateEvent: React.FC<{
       mutation
         .mutateAsync(updatedData)
         .then(() => {
-          console.log("event category updated.");
+          toast.success("event updated successfully");
+        })
+        .catch(() => {
+          toast.error("something went wrong, try again");
         })
         .finally(() => {
           reset();
@@ -85,7 +89,10 @@ export const CreateEvent: React.FC<{
     mutation
       .mutateAsync({ ...values, user_id: user.id })
       .then(() => {
-        console.log("event category created.");
+        toast.success("event created successfully");
+      })
+      .catch(() => {
+        toast.error("something went wrong, try again");
       })
       .finally(() => {
         reset();

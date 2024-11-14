@@ -26,13 +26,14 @@ function isNumber(str: string) {
 }
 
 export const CreateBlog = () => {
+  const [value, setValue] = useState("");
+  const [image, setImage] = useState<File | string | undefined>(undefined);
+  const [imagePreview, setImagePreview] = useState("");
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
-  const {
-    data: singlePost,
-    isLoading: singlePostLoading,
-    error: singlePostError,
-  } = useQuery<PostType>(
+
+  const { data: singlePost, isLoading: singlePostLoading } = useQuery<PostType>(
     ["singlePost"],
     () => services.getSinglePost(Number(id)),
     {
@@ -42,18 +43,24 @@ export const CreateBlog = () => {
       staleTime: 0,
       refetchOnWindowFocus: false,
       refetchOnMount: true,
+      onError(error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+          return;
+        }
+        toast.error("Something went wrong.");
+        navigate(paths.dashboard.blogs);
+      },
     }
   );
 
-  const [value, setValue] = useState("");
+  const isEdit = validate(id) !== true && singlePost ? true : false;
+
   const {
     register,
     handleSubmit,
     setValue: setFormValue,
   } = useForm<CreateBlogFormType>();
-  const [image, setImage] = useState<File | string | undefined>(undefined);
-  const [imagePreview, setImagePreview] = useState("");
-  const queryClient = useQueryClient();
 
   const { data, isLoading: postCategoryLoading } = useQuery<PostCategoryType[]>(
     ["postCategories"],
@@ -63,30 +70,11 @@ export const CreateBlog = () => {
     }
   );
 
-  const isEdit = validate(id) !== true && singlePost ? true : false;
-
-  useEffect(() => {
-    if (isEdit && singlePost) {
-      setFormValue("title", singlePost.title);
-      setFormValue("category_id", singlePost.category_id);
-      setValue(singlePost.content);
-      // setImage(singlePost.banner);
-      setImagePreview(singlePost.banner);
-    }
-  }, [isEdit, singlePost, setFormValue]);
-
   const mutation = useMutation({
     mutationFn: services.createPost,
     onSuccess: () => {
       // Invalidate and refetch posts after a successful mutation
       queryClient.invalidateQueries("posts");
-    },
-    onError(error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-        return;
-      }
-      toast.error("Something went wrong.");
     },
   });
 
@@ -97,6 +85,17 @@ export const CreateBlog = () => {
       queryClient.invalidateQueries("posts");
       queryClient.invalidateQueries("singlePost");
     },
+  });
+
+  const publishMutation = useMutation({
+    mutationFn: services.publishPost,
+    onSuccess: () => {
+      // Invalidate and refetch posts after a successful mutation
+      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("singlePost");
+
+      toast.success("Post published");
+    },
     onError(error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -106,21 +105,15 @@ export const CreateBlog = () => {
     },
   });
 
-  const publishMutation = useMutation({
-    mutationFn: services.publishPost,
-    onSuccess: () => {
-      // Invalidate and refetch posts after a successful mutation
-      queryClient.invalidateQueries("posts");
-      queryClient.invalidateQueries("singlePost");
-    },
-    onError(error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-        return;
-      }
-      toast.error("Something went wrong.");
-    },
-  });
+  useEffect(() => {
+    if (isEdit && singlePost) {
+      setFormValue("title", singlePost.title);
+      setFormValue("category_id", singlePost.category_id);
+      setValue(singlePost.content);
+      setImage(singlePost.banner);
+      setImagePreview(singlePost.banner);
+    }
+  }, [isEdit, singlePost, setFormValue]);
 
   const formattedPostCategory = data
     ? data.map((item) => ({ label: item.name, value: item.id.toString() }))
@@ -194,33 +187,11 @@ export const CreateBlog = () => {
     }
   };
 
-  const handlePublish = async () => {
+  const handlePublish = () => {
     if (!isEdit || !singlePost) return;
 
-    try {
-      await publishMutation.mutateAsync(singlePost);
-
-      toast.success("Post published");
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-        return;
-      }
-      toast.error("Something went wrong.");
-    }
+    publishMutation.mutate(singlePost);
   };
-
-  useEffect(() => {
-    if (singlePostLoading) return;
-
-    if (singlePostError) {
-      if (singlePostError instanceof Error) {
-        toast.error(singlePostError.message);
-      } else toast.error("Something went wrong.");
-
-      navigate(paths.dashboard.blogs);
-    }
-  }, [singlePostError, navigate, singlePostLoading]);
 
   return (
     <div className="flex justify-between h-screen overflow-hidden">
@@ -295,7 +266,7 @@ export const CreateBlog = () => {
                 className="input-zone  "
                 {...getInputProps({
                   name: "post-logo",
-                  required: singlePost ? false : true,
+                  required: isEdit ? false : true,
                 })}
               />
               <div className="text-center">

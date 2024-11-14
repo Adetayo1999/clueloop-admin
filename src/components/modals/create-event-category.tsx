@@ -11,6 +11,7 @@ import services from "../../services";
 import { useMutation, useQueryClient } from "react-query";
 import { EventCategoryType } from "../../lib/types";
 import { useModal } from "../../context/modal";
+import toast from "react-hot-toast";
 
 export const CreateEventCategory: React.FC<{
   data?: EventCategoryType;
@@ -50,7 +51,10 @@ export const CreateEventCategory: React.FC<{
       mutation
         .mutateAsync(updatedData)
         .then(() => {
-          console.log("event category updated.");
+          toast.success("event category updated successfully");
+        })
+        .catch(() => {
+          toast.error("something went wrong, try again");
         })
         .finally(() => {
           reset();
@@ -63,7 +67,10 @@ export const CreateEventCategory: React.FC<{
     mutation
       .mutateAsync(values)
       .then(() => {
-        console.log("event category created.");
+        toast.success("event category created successfully");
+      })
+      .catch(() => {
+        toast.error("something went wrong, try again");
       })
       .finally(() => {
         reset();
