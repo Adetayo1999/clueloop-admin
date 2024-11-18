@@ -48,6 +48,18 @@ export const PostCategoriesTable = () => {
       header: "ID",
       cell: (info) => <p>{info.getValue()}</p>,
     }),
+    columnHelper.accessor("banner", {
+      header: "Banner Image",
+      cell: (info) => (
+        <div className="h-[4rem] w-[4rem] bg-gray-100 dark:bg-black rounded-md overflow-hidden dark:border-gray-500 dark:border-opacity-40 border">
+          <img
+            src={info.getValue()}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ),
+    }),
     columnHelper.accessor("name", {
       header: "Name",
       cell: (info) => <p>{info.getValue()}</p>,

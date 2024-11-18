@@ -74,7 +74,7 @@ export const ModalHeaderContainer = ({
 };
 
 export const ModalTitle = ({ title }: { title: string }) => (
-  <h1 className="text-[#101828] dark:text-slate-50 font-semibold text-lg capitalize">
+  <h1 className="text-[#101828] dark:text-slate-100 font-semibold text-lg capitalize">
     {title}
   </h1>
 );
@@ -87,7 +87,7 @@ export const ModalCloseButton = ({
 
   return (
     <button
-      className="text-[#667085] size-6 font-bold"
+      className="text-[#667085] dark:text-slate-100  size-6 font-bold"
       {...rest}
       onClick={(e) => {
         onClick?.(e);

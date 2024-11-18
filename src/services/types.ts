@@ -16,13 +16,19 @@ export interface CreatePostRequestBodyType {
   banner: File | string;
 }
 
+export interface CreatePostCategoryRequestBodyType {
+  name: string;
+  description: string;
+  banner: File | string;
+}
+
 export interface EditPostRequestBodyType {
   title: string;
   content: string;
   category_id: number;
   user_id: number;
   id: number;
-  banner?: File | string;
+  banner?: File;
   _method: "put";
 }
 

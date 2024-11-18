@@ -1,6 +1,8 @@
 export interface PostCategoryType {
   id: number;
   name: string;
+  description: string;
+  banner: string;
   created_at: string;
   updated_at: string;
 }

@@ -27,7 +27,7 @@ function isNumber(str: string) {
 
 export const CreateBlog = () => {
   const [value, setValue] = useState("");
-  const [image, setImage] = useState<File | string | undefined>(undefined);
+  const [image, setImage] = useState<File>();
   const [imagePreview, setImagePreview] = useState("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -110,7 +110,6 @@ export const CreateBlog = () => {
       setFormValue("title", singlePost.title);
       setFormValue("category_id", singlePost.category_id);
       setValue(singlePost.content);
-      setImage(singlePost.banner);
       setImagePreview(singlePost.banner);
     }
   }, [isEdit, singlePost, setFormValue]);
@@ -197,10 +196,10 @@ export const CreateBlog = () => {
     <div className="flex justify-between h-screen overflow-hidden">
       <div className="flex-[0.7] h-full overflow-y-auto">
         <div className="h-[25rem] flex justify-center items-center overflow-hidden  bg-slate-50 dark:bg-gray-800">
-          {image && imagePreview ? (
+          {imagePreview ? (
             <img src={imagePreview} className="w-full h-full object-cover" />
           ) : null}
-          {!image && !imagePreview ? (
+          {!imagePreview ? (
             <span>
               <PhotoIcon className="size-40 text-gray-500" />
             </span>
@@ -250,7 +249,7 @@ export const CreateBlog = () => {
                 ),
               })}
             >
-              {image && imagePreview && (
+              {imagePreview && (
                 <div className="w-full h-full absolute z-10">
                   <img
                     src={imagePreview}

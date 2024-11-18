@@ -36,7 +36,7 @@ const CustomSelect: React.FC<InputProps> = React.forwardRef(
           <div className="relative">
             <select
               className={clsx(
-                "outline-none transition-all duration-200 text-base dark:bg-transparent  border rounded-xl px-4 py-3 h-[2.5rem] md:h-[3rem]  w-full",
+                "outline-none transition-all dark:border-gray-500 dark:border-opacity-50 duration-200 text-base dark:bg-transparent  border rounded-xl px-4 py-3 h-[2.5rem] md:h-[3rem]  w-full",
                 "border-[#CBD5E1] dark:border-opacity-40 dark:text-white focus:ring-2 focus:ring-primary focus:ring-opacity-40",
                 className
               )}

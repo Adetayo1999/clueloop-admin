@@ -38,7 +38,7 @@ const CustomTextarea: React.FC<CustomTextareaProps> = React.forwardRef(
             <textarea
               className={clsx(
                 "outline-none transition-all duration-200 text-base dark:bg-transparent  border rounded-xl px-4 py-3  w-full",
-                "border-[#CBD5E1] dark:border-opacity-40 dark:text-white focus:ring-2 focus:ring-primary focus:ring-opacity-40",
+                "border-[#CBD5E1] dark:border-gray-500 dark:border-opacity-50  dark:text-white focus:ring-2 focus:ring-primary focus:ring-opacity-40",
                 className
               )}
               {...rest}

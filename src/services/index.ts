@@ -18,22 +18,20 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
   },
 
-  async createPostsCategory(data: { name: string }) {
+  async createPostsCategory(data: types.CreatePostCategoryRequestBodyType) {
     const { method, url } = endpoints.dashboard.post_category.create;
-    return makeAuthorizedRequestWithHeadersAndPayload(method, url, data);
+    return makeRequestWithFormData(method, url, data, true);
   },
   async deletePostsCategory(id: number) {
     const { method, url } = endpoints.dashboard.post_category.delete;
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updatePostsCategory(data: { id: number; name: string }) {
+  async updatePostsCategory(
+    data: types.CreatePostCategoryRequestBodyType & { id: number }
+  ) {
     const { method, url } = endpoints.dashboard.post_category.update;
-    return makeAuthorizedRequestWithHeadersAndPayload(
-      method,
-      url(data.id),
-      data
-    );
+    return makeRequestWithFormData(method, url(data.id), data, true);
   },
 
   // post
