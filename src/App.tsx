@@ -14,6 +14,8 @@ const EventsPage = lazy(() => import("./modules/dashboard/events"));
 const EventsCategory = lazy(
   () => import("./modules/dashboard/events-category")
 );
+const Questionnaire = lazy(() => import("./modules/dashboard/questionnaire"));
+const Questions = lazy(() => import("./modules/dashboard/questions"));
 
 function App() {
   return (
@@ -44,6 +46,12 @@ function App() {
               element={<EventsCategory />}
             />
           </Route>
+
+          <Route
+            element={<Questionnaire />}
+            path={paths.dashboard.questionnaires}
+          />
+          <Route element={<Questions />} path={paths.dashboard.quesitons} />
           <Route path="*" element={<p>ROUTE NOT FOUND</p>} />
         </Route>
       </Routes>

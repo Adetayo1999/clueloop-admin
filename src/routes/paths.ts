@@ -9,5 +9,7 @@ export const paths = {
     events: "/events",
     events_category: "/events_category",
     create_blog: "/blogs/:id",
+    questionnaires: "/questionnaires",
+    quesitons: "/questionnaire/:id/questions",
   },
 };

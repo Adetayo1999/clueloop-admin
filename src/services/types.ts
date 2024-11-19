@@ -38,3 +38,19 @@ export interface CreateEventRequestBodyType {
   category_id: number;
   user_id: number;
 }
+
+export interface CreateQuestionnaireRequestBodyType {
+  name: string;
+}
+
+export interface CreateQuestionRequestBodyType {
+  title: string;
+  category_id: number;
+  options: { value: string; score: string }[];
+}
+
+export interface EditQuestionRequestBodyType {
+  title: string;
+  category_id: number;
+  options: { value: string; score?: string; id: number }[];
+}

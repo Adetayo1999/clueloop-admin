@@ -123,6 +123,68 @@ const services = {
       data
     );
   },
+
+  //qiestionnaire
+  async getQuestionnaires() {
+    const { method, url } = endpoints.dashboard.questionnaire.get;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
+
+  async getAllQuestionnaireQuestions(id: number) {
+    const { method, url } = endpoints.dashboard.questionnaire.get_all_questions;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
+  },
+
+  async getSingleQuestionnaire(id: number) {
+    const { method, url } = endpoints.dashboard.questionnaire.get_single;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
+  },
+
+  async createQuestionnaires(data: types.CreateQuestionnaireRequestBodyType) {
+    const { method, url } = endpoints.dashboard.questionnaire.create;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, data);
+  },
+  async deleteQuestionnaire(id: number) {
+    const { method, url } = endpoints.dashboard.questionnaire.delete;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
+  },
+
+  async updateQuestionnaire(
+    data: types.CreateQuestionnaireRequestBodyType & { id: number }
+  ) {
+    const { method, url } = endpoints.dashboard.questionnaire.update;
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(data.id),
+      data
+    );
+  },
+
+  //qiestionnaire
+  async getQuestion() {
+    const { method, url } = endpoints.dashboard.question.get;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
+
+  async createQuestion(data: types.CreateQuestionRequestBodyType) {
+    const { method, url } = endpoints.dashboard.question.create;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, data);
+  },
+  async deleteQuestion(id: number) {
+    const { method, url } = endpoints.dashboard.question.delete;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
+  },
+
+  async updateQuestion(
+    data: types.EditQuestionRequestBodyType & { id: number }
+  ) {
+    const { method, url } = endpoints.dashboard.question.update;
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(data.id),
+      data
+    );
+  },
 };
 
 export default services;

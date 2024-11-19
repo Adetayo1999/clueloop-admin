@@ -2,6 +2,7 @@ import {
   CalendarDaysIcon,
   ClipboardDocumentListIcon,
   HomeIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { NavLink, useLocation } from "react-router-dom";
@@ -62,6 +63,14 @@ export const DashboardSidebar = () => {
                   this.path === location.pathname ||
                   location.pathname === paths.dashboard.events_category
                 );
+              },
+            },
+            {
+              title: "Questionnaires",
+              Icon: UserGroupIcon,
+              path: paths.dashboard.questionnaires,
+              isActive() {
+                return this.path === location.pathname;
               },
             },
           ].map((item, idx) => (

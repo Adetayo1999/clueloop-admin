@@ -6,11 +6,21 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string | React.ReactNode;
   error?: FieldError;
+  showError?: boolean;
 }
 
 const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
   (
-    { label, className, error, type, name, required, ...rest },
+    {
+      label,
+      className,
+      error,
+      type,
+      name,
+      required,
+      showError = true,
+      ...rest
+    },
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -41,7 +51,7 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
 
     return (
       <div>
-        <div className="flex flex-col gap-y-2 mb-1">
+        <div className="flex flex-col gap-y-2">
           {label && renderInputLabel()}
           <div className="relative">
             <input
@@ -71,13 +81,15 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
             )}
           </div>
         </div>
-        <div className="h-4">
-          {error && (
-            <span className="text-xs text-red-500 font-bold">
-              {error.message || "field required"}
-            </span>
-          )}
-        </div>
+        {showError && (
+          <div className="h-4 mt-1">
+            {error && (
+              <span className="text-xs text-red-500 font-bold">
+                {error.message || "field required"}
+              </span>
+            )}
+          </div>
+        )}
       </div>
     );
   }

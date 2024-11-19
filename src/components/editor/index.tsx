@@ -64,6 +64,7 @@ const CustomEditor: React.FC<
   const modules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: ["small", false, "large", "huge"] }],
       [{ list: "ordered" }, { list: "bullet" }],
       ["bold", "italic", "underline"],
       [{ color: [] }, { background: [] }],

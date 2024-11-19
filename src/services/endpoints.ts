@@ -90,5 +90,49 @@ export const endpoints = {
         url: (id: number) => `/events/${id}`,
       },
     },
+    questionnaire: {
+      get: {
+        method: "GET",
+        url: "/question-categories",
+      },
+      create: {
+        method: "POST",
+        url: "/question-categories",
+      },
+      get_single: {
+        method: "GET",
+        url: (id: number) => `/question-categories/${id}`,
+      },
+      update: {
+        method: "PUT",
+        url: (id: number) => `/question-categories/${id}`,
+      },
+      delete: {
+        method: "DELETE",
+        url: (id: number) => `/question-categories/${id}`,
+      },
+      get_all_questions: {
+        method: "GET",
+        url: (id: number) => `/questions/get/category/${id}`,
+      },
+    },
+    question: {
+      get: {
+        method: "GET",
+        url: "/questions",
+      },
+      create: {
+        method: "POST",
+        url: "/questions",
+      },
+      update: {
+        method: "PUT",
+        url: (id: number) => `/questions/${id}`,
+      },
+      delete: {
+        method: "DELETE",
+        url: (id: number) => `/questions/${id}`,
+      },
+    },
   },
 };
