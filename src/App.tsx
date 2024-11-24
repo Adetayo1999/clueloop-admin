@@ -19,43 +19,86 @@ const Questions = lazy(() => import("./modules/dashboard/questions"));
 
 function App() {
   return (
-    <React.Suspense fallback={<p>Loading</p>}>
-      <Routes>
-        <Route path={paths.auth.login} element={<Login />} />
-        <Route element={<ProtectedLayout />}>
-          <Route path={paths.dashboard.home} index element={<Home />} />
+    <Routes>
+      <Route path={paths.auth.login} element={<Login />} />
+      <Route element={<ProtectedLayout />}>
+        <Route
+          path={paths.dashboard.home}
+          index
+          element={
+            <React.Suspense fallback={<p>Loading....</p>}>
+              <Home />
+            </React.Suspense>
+          }
+        />
 
-          {/* Posts Layout */}
-          <Route element={<PostsLayout />}>
-            <Route path={paths.dashboard.blogs} element={<PostsPage />} />
-            <Route
-              path={paths.dashboard.blogs_category}
-              element={<PostsCategory />}
-            />
-            <Route
-              path={paths.dashboard.create_blog}
-              element={<CreateBlog />}
-            />
-          </Route>
-
-          {/* Events Layout */}
-          <Route element={<EventsLayout />}>
-            <Route path={paths.dashboard.events} element={<EventsPage />} />
-            <Route
-              path={paths.dashboard.events_category}
-              element={<EventsCategory />}
-            />
-          </Route>
-
+        {/* Posts Layout */}
+        <Route element={<PostsLayout />}>
           <Route
-            element={<Questionnaire />}
-            path={paths.dashboard.questionnaires}
+            path={paths.dashboard.blogs}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <PostsPage />
+              </React.Suspense>
+            }
           />
-          <Route element={<Questions />} path={paths.dashboard.quesitons} />
-          <Route path="*" element={<p>ROUTE NOT FOUND</p>} />
+          <Route
+            path={paths.dashboard.blogs_category}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <PostsCategory />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={paths.dashboard.create_blog}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <CreateBlog />
+              </React.Suspense>
+            }
+          />
         </Route>
-      </Routes>
-    </React.Suspense>
+
+        {/* Events Layout */}
+        <Route element={<EventsLayout />}>
+          <Route
+            path={paths.dashboard.events}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <EventsPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={paths.dashboard.events_category}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <EventsCategory />
+              </React.Suspense>
+            }
+          />
+        </Route>
+
+        <Route
+          element={
+            <React.Suspense fallback={<p>Loading....</p>}>
+              <Questionnaire />
+            </React.Suspense>
+          }
+          path={paths.dashboard.questionnaires}
+        />
+        <Route
+          element={
+            <React.Suspense fallback={<p>Loading....</p>}>
+              <Questions />
+            </React.Suspense>
+          }
+          path={paths.dashboard.quesitons}
+        />
+        <Route path="*" element={<p>ROUTE NOT FOUND</p>} />
+      </Route>
+    </Routes>
   );
 }
 
