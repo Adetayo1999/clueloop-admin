@@ -16,7 +16,7 @@ export const endpoints = {
         url: "/post-categories",
       },
       update: {
-        method: "PUT",
+        method: "POST",
         url: (id: number) => `/post-categories/${id}`,
       },
       delete: {
@@ -34,7 +34,7 @@ export const endpoints = {
         url: "/event-categories",
       },
       update: {
-        method: "PUT",
+        method: "POST",
         url: (id: number) => `/event-categories/${id}`,
       },
       delete: {
@@ -82,7 +82,7 @@ export const endpoints = {
         url: "/events",
       },
       update: {
-        method: "PUT",
+        method: "POST",
         url: (id: number) => `/events/${id}`,
       },
       delete: {
@@ -104,7 +104,7 @@ export const endpoints = {
         url: (id: number) => `/question-categories/${id}`,
       },
       update: {
-        method: "PUT",
+        method: "POST",
         url: (id: number) => `/question-categories/${id}`,
       },
       delete: {
@@ -126,7 +126,7 @@ export const endpoints = {
         url: "/questions",
       },
       update: {
-        method: "PUT",
+        method: "POST",
         url: (id: number) => `/questions/${id}`,
       },
       delete: {

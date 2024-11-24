@@ -27,9 +27,7 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updatePostsCategory(
-    data: types.CreatePostCategoryRequestBodyType & { id: number }
-  ) {
+  async updatePostsCategory(data: types.UpdatePostCategoryRequestBodyType) {
     const { method, url } = endpoints.dashboard.post_category.update;
     return makeRequestWithFormData(method, url(data.id), data, true);
   },
@@ -91,7 +89,7 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updateEventsCategory(data: { id: number; name: string }) {
+  async updateEventsCategory(data: types.UpdateEventCategoryRequestType) {
     const { method, url } = endpoints.dashboard.event_category.update;
     return makeAuthorizedRequestWithHeadersAndPayload(
       method,
@@ -115,7 +113,7 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updateEvent(data: types.CreateEventRequestBodyType & { id: number }) {
+  async updateEvent(data: types.UpdateEventRequestBodyType) {
     const { method, url } = endpoints.dashboard.event.update;
     return makeAuthorizedRequestWithHeadersAndPayload(
       method,
@@ -149,9 +147,7 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updateQuestionnaire(
-    data: types.CreateQuestionnaireRequestBodyType & { id: number }
-  ) {
+  async updateQuestionnaire(data: types.EditQuestionnaireRequestBodyType) {
     const { method, url } = endpoints.dashboard.questionnaire.update;
     return makeAuthorizedRequestWithHeadersAndPayload(
       method,
@@ -175,9 +171,7 @@ const services = {
     return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
   },
 
-  async updateQuestion(
-    data: types.EditQuestionRequestBodyType & { id: number }
-  ) {
+  async updateQuestion(data: types.EditQuestionRequestBodyType) {
     const { method, url } = endpoints.dashboard.question.update;
     return makeAuthorizedRequestWithHeadersAndPayload(
       method,

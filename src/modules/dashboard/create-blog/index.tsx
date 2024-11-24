@@ -311,7 +311,7 @@ export const CreateBlog = () => {
           </div>
         </form>
 
-        {isEdit && singlePost && singlePost?.is_published === 0 ? (
+        {isEdit && singlePost && !singlePost?.is_published ? (
           <button
             className="bg-green-500 right-5 absolute bottom-8 w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={handlePublish}

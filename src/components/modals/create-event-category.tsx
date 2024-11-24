@@ -35,10 +35,15 @@ export const CreateEventCategory: React.FC<{
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn:
-      isEdit && data
-        ? services.updateEventsCategory
-        : services.createEventsCategory,
+    mutationFn: services.createEventsCategory,
+    onSuccess: () => {
+      // Invalidate and refetch posts after a successful mutation
+      queryClient.invalidateQueries("eventCategories");
+    },
+  });
+
+  const editmutation = useMutation({
+    mutationFn: services.updateEventsCategory,
     onSuccess: () => {
       // Invalidate and refetch posts after a successful mutation
       queryClient.invalidateQueries("eventCategories");
@@ -47,9 +52,8 @@ export const CreateEventCategory: React.FC<{
 
   const onSubmit: SubmitHandler<{ name: string }> = async (values) => {
     if (isEdit && data) {
-      const updatedData = { ...values, id: data.id };
-      mutation
-        .mutateAsync(updatedData)
+      editmutation
+        .mutateAsync({ ...values, id: data.id, _method: "put" })
         .then(() => {
           toast.success("event category updated successfully");
         })
@@ -99,7 +103,7 @@ export const CreateEventCategory: React.FC<{
             <ModalButton
               text="Submit"
               variant="primary"
-              loading={mutation.isLoading}
+              loading={mutation.isLoading || editmutation.isLoading}
               disabled={data?.name === name}
             />
           </div>

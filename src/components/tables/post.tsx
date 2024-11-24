@@ -75,10 +75,10 @@ export const PostsTable = () => {
         <button
           className={clsx(
             "px-5 text-xs flex justify-center min-w-[7rem] items-center font-semibold py-2 text-white rounded",
-            info.getValue() === 1 ? "bg-green-600" : "bg-yellow-600"
+            info.getValue() === true ? "bg-green-600" : "bg-yellow-600"
           )}
         >
-          {info.getValue() === 1 ? "Published" : "Draft"}
+          {info.getValue() === true ? "Published" : "Draft"}
         </button>
       ),
     }),

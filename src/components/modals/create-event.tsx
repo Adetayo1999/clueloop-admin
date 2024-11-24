@@ -52,7 +52,15 @@ export const CreateEvent: React.FC<{
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: isEdit && data ? services.updateEvent : services.createEvent,
+    mutationFn: services.createEvent,
+    onSuccess: () => {
+      // Invalidate and refetch posts after a successful mutation
+      queryClient.invalidateQueries("events");
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: services.updateEvent,
     onSuccess: () => {
       // Invalidate and refetch posts after a successful mutation
       queryClient.invalidateQueries("events");
@@ -65,9 +73,8 @@ export const CreateEvent: React.FC<{
     category_id: number;
   }> = async (values) => {
     if (isEdit && data) {
-      const updatedData = { ...data, ...values };
-      mutation
-        .mutateAsync(updatedData)
+      editMutation
+        .mutateAsync({ ...data, ...values, _method: "put" })
         .then(() => {
           toast.success("event updated successfully");
         })
@@ -136,7 +143,7 @@ export const CreateEvent: React.FC<{
             <ModalButton
               text="Submit"
               variant="primary"
-              loading={mutation.isLoading}
+              loading={mutation.isLoading || editMutation.isLoading}
             />
           </div>
         </form>

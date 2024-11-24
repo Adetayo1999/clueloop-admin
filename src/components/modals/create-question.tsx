@@ -79,7 +79,7 @@ export const CreateQuestion: React.FC<{
     },
   });
 
-  const ediMutation = useMutation({
+  const editMutation = useMutation({
     mutationFn: services.updateQuestion,
     onSuccess: () => {
       queryClient.invalidateQueries("questions");
@@ -89,8 +89,13 @@ export const CreateQuestion: React.FC<{
   const onSubmit: SubmitHandler<FormType> = async (values) => {
     console.log(values);
     if (isEdit && data) {
-      ediMutation
-        .mutateAsync({ ...values, category_id: data.category_id, id: data.id })
+      editMutation
+        .mutateAsync({
+          ...values,
+          category_id: data.category_id,
+          id: data.id,
+          _method: "put",
+        })
         .then(() => {
           toast.success("question updated successfully");
         })
@@ -197,7 +202,7 @@ export const CreateQuestion: React.FC<{
             <ModalButton
               text="Submit"
               variant="primary"
-              loading={createMutation.isLoading || ediMutation.isLoading}
+              loading={createMutation.isLoading || editMutation.isLoading}
               disabled={
                 isEdit ? JSON.stringify(values) === JSON.stringify(data) : false
               }

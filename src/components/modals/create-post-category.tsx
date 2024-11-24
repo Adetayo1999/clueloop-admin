@@ -15,22 +15,19 @@ import toast from "react-hot-toast";
 import { CreatePostCategoryRequestBodyType } from "../../services/types";
 import CustomTextarea from "../textarea";
 import CustomDropzone from "../custom-dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 
 const DEFAULT_IMAGE_URL =
   "https://clueloop.quickgeosearch.com.ng/images/default-banner.jpg";
 
-type CreatePostCategoryFormType = Omit<
-  CreatePostCategoryRequestBodyType,
-  "banner"
->;
+type CreatePostCategoryFormType = Omit<CreatePostCategoryRequestBodyType, "">;
 
 export const CreatePostCategory: React.FC<{
   data?: PostCategoryType;
   isEdit?: boolean;
 }> = ({ data, isEdit }) => {
-  const [image, setImage] = useState<File | string | undefined>();
+  const [image, setImage] = useState<File>();
   const [imagePreview, setImagePreview] = useState<string>();
   const { setModalContent } = useModal();
   const {
@@ -66,10 +63,15 @@ export const CreatePostCategory: React.FC<{
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn:
-      isEdit && data
-        ? services.updatePostsCategory
-        : services.createPostsCategory,
+    mutationFn: services.createPostsCategory,
+    onSuccess: () => {
+      // Invalidate and refetch posts after a successful mutation
+      queryClient.invalidateQueries("postCategories");
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: services.updatePostsCategory,
     onSuccess: () => {
       // Invalidate and refetch posts after a successful mutation
       queryClient.invalidateQueries("postCategories");
@@ -80,13 +82,13 @@ export const CreatePostCategory: React.FC<{
     values
   ) => {
     if (isEdit && data) {
-      const updatedData = {
-        ...values,
-        id: data.id,
-        banner: image || data.banner,
-      };
-      mutation
-        .mutateAsync(updatedData)
+      editMutation
+        .mutateAsync({
+          ...values,
+          id: data.id,
+          banner: image,
+          _method: "put",
+        })
         .then(() => {
           toast.success("post category updated.");
           reset();
@@ -112,6 +114,12 @@ export const CreatePostCategory: React.FC<{
       });
   };
 
+  useEffect(() => {
+    if (isEdit) {
+      setImagePreview(data?.banner);
+    }
+  }, [isEdit, data]);
+
   return (
     <div className="">
       <ModalHeaderContainer>
@@ -133,7 +141,7 @@ export const CreatePostCategory: React.FC<{
                 }}
                 name="banner"
                 className="border border-[#0052FF1A] h-full"
-                maxSize={512000}
+                maxSize={1500000}
                 onDrop={onImageDrop}
                 maxFiles={1}
                 required={
@@ -172,7 +180,7 @@ export const CreatePostCategory: React.FC<{
             <ModalButton
               text="Submit"
               variant="primary"
-              loading={mutation.isLoading}
+              loading={mutation.isLoading || editMutation.isLoading}
             />
           </div>
         </form>

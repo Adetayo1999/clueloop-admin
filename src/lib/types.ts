@@ -17,6 +17,8 @@ export interface EventCategoryType {
 export interface QuestionnaireType {
   id: number;
   name: string;
+  description: string;
+  type: "Opportunity" | "Assessment";
   created_at: string;
   updated_at: string;
 }
@@ -34,7 +36,7 @@ export interface PostType {
   category_id: number;
   user_id: number;
   banner: string;
-  is_published: number;
+  is_published: boolean;
   created_at: string;
   updated_at: string;
 }

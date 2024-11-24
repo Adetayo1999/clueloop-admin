@@ -13,6 +13,10 @@ import { QuestionnaireType } from "../../lib/types";
 import { useModal } from "../../context/modal";
 import CustomTextarea from "../textarea";
 import toast from "react-hot-toast";
+import CustomSelect from "../custom-select";
+import { useEffect } from "react";
+
+type FormType = Omit<QuestionnaireType, "id" | "created_at" | "updated_at">;
 
 export const CreateQuestionnaire: React.FC<{
   data?: QuestionnaireType;
@@ -24,11 +28,10 @@ export const CreateQuestionnaire: React.FC<{
     reset,
     formState: { errors },
     handleSubmit,
-  } = useForm<{ name: string; description: string }>({
-    defaultValues: {
-      name: data?.name,
-    },
-  });
+    watch,
+  } = useForm<FormType>({});
+
+  const values = watch();
 
   const queryClient = useQueryClient();
 
@@ -46,13 +49,10 @@ export const CreateQuestionnaire: React.FC<{
     },
   });
 
-  const onSubmit: SubmitHandler<{
-    name: string;
-    description: string;
-  }> = async (values) => {
+  const onSubmit: SubmitHandler<FormType> = async (values) => {
     if (isEdit && data) {
       ediMutation
-        .mutateAsync({ ...values, id: data.id })
+        .mutateAsync({ ...values, id: data.id, _method: "put" })
         .then(() => {
           toast.success("questionnaire updated successfully");
         })
@@ -81,6 +81,12 @@ export const CreateQuestionnaire: React.FC<{
       });
   };
 
+  useEffect(() => {
+    if (data && isEdit) {
+      reset(data);
+    }
+  }, [isEdit, data, reset]);
+
   return (
     <div className="">
       <ModalHeaderContainer>
@@ -98,17 +104,39 @@ export const CreateQuestionnaire: React.FC<{
             error={errors.name}
             placeholder="Enter questionnaire name"
           />
+          <CustomSelect
+            label="Choose questionnaire Type"
+            {...register("type", { required: true })}
+            error={errors.type}
+            options={[
+              {
+                label: "Choose type",
+                value: "",
+              },
+              {
+                label: "Assessment",
+                value: "Assessment",
+              },
+              {
+                label: "Opportunity",
+                value: "Opportunity",
+              },
+            ]}
+          />
           <CustomTextarea
             label="Enter questionnaire description"
             {...register("description")}
             error={errors.description}
             placeholder="Enter questionnaire description"
+            rows={5}
           />
+
           <div className="">
             <ModalButton
               text="Submit"
               variant="primary"
               loading={createMutation.isLoading || ediMutation.isLoading}
+              disabled={JSON.stringify(values) === JSON.stringify(data)}
             />
           </div>
         </form>
