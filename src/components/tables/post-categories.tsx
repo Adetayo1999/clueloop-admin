@@ -44,10 +44,11 @@ export const PostCategoriesTable = () => {
   const columnHelper = createColumnHelper<PostCategoryType>();
 
   const columns = [
-    columnHelper.accessor("id", {
-      header: "ID",
-      cell: (info) => <p>{info.getValue()}</p>,
-    }),
+    {
+      header: "#", // Header for the index column
+      accessorFn: (_: PostCategoryType, rowIndex: number) => rowIndex + 1, // Incremental index
+      id: "index",
+    },
     columnHelper.accessor("banner", {
       header: "Banner Image",
       cell: (info) => (

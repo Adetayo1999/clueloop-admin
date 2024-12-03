@@ -66,3 +66,32 @@ export interface QuestionType {
     updated_at: string;
   }[];
 }
+
+export interface AnswerType {
+  id: number;
+  question_id: number;
+  options_id: number;
+  forms_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClientType {
+  id: number;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface QuestionResponseType {
+  id: number;
+  clients_id: number;
+  status: true;
+  created_at: string;
+  updated_at: string;
+  clients: ClientType;
+  answers: AnswerType;
+}

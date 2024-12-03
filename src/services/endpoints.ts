@@ -134,5 +134,11 @@ export const endpoints = {
         url: (id: number) => `/questions/${id}`,
       },
     },
+    forms: {
+      get_submitted: {
+        method: "GET",
+        url: "/forms/get/submitted",
+      },
+    },
   },
 };

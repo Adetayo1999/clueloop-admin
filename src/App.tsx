@@ -16,6 +16,9 @@ const EventsCategory = lazy(
 );
 const Questionnaire = lazy(() => import("./modules/dashboard/questionnaire"));
 const Questions = lazy(() => import("./modules/dashboard/questions"));
+const QuestionnaireResponses = lazy(
+  () => import("./modules/dashboard/questionnaire-responses")
+);
 
 function App() {
   return (
@@ -95,6 +98,14 @@ function App() {
             </React.Suspense>
           }
           path={paths.dashboard.quesitons}
+        />
+        <Route
+          element={
+            <React.Suspense fallback={<p>Loading....</p>}>
+              <QuestionnaireResponses />
+            </React.Suspense>
+          }
+          path={paths.dashboard.responses}
         />
         <Route path="*" element={<p>ROUTE NOT FOUND</p>} />
       </Route>

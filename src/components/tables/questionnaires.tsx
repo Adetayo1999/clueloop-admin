@@ -51,10 +51,11 @@ export const QuestionnairesTable = () => {
   const columnHelper = createColumnHelper<QuestionnaireType>();
 
   const columns = [
-    columnHelper.accessor("id", {
-      header: "ID",
-      cell: (info) => <p>{info.getValue()}</p>,
-    }),
+    {
+      header: "#", // Header for the index column
+      accessorFn: (_: QuestionnaireType, rowIndex: number) => rowIndex + 1, // Incremental index
+      id: "index",
+    },
 
     columnHelper.accessor("name", {
       header: "Name",

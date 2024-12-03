@@ -179,6 +179,12 @@ const services = {
       data
     );
   },
+
+  async getSubmittedResponses() {
+    const { method, url } = endpoints.dashboard.forms.get_submitted;
+
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
 };
 
 export default services;

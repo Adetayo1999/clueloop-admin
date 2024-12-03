@@ -55,10 +55,11 @@ export const QuestionsTable = () => {
   const columnHelper = createColumnHelper<QuestionType>();
 
   const columns = [
-    columnHelper.accessor("id", {
-      header: "ID",
-      cell: (info) => <p>{info.getValue()}</p>,
-    }),
+    {
+      header: "#", // Header for the index column
+      accessorFn: (_: QuestionType, rowIndex: number) => rowIndex + 1, // Incremental index
+      id: "index",
+    },
 
     columnHelper.accessor("title", {
       header: "Question",

@@ -47,10 +47,11 @@ export const PostsTable = () => {
   const columnHelper = createColumnHelper<PostType>();
 
   const columns = [
-    columnHelper.accessor("id", {
-      header: "ID",
-      cell: (info) => <p>{info.getValue()}</p>,
-    }),
+    {
+      header: "#", // Header for the index column
+      accessorFn: (_: PostType, rowIndex: number) => rowIndex + 1, // Incremental index
+      id: "index",
+    },
     columnHelper.accessor("banner", {
       header: "Banner Image",
       cell: (info) => (
