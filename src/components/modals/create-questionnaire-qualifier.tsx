@@ -8,18 +8,20 @@ import {
   ModalTitle,
 } from "../modal";
 import services from "../../services";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { QuestionnaireQualifierType, QuestionnaireType } from "../../lib/types";
+import { useMutation, useQueryClient } from "react-query";
+import { QuestionnaireQualifierType } from "../../lib/types";
 import { useModal } from "../../context/modal";
 import CustomTextarea from "../textarea";
 import toast from "react-hot-toast";
-import CustomSelect from "../custom-select";
 import { useEffect } from "react";
 
-type FormType = Omit<QuestionnaireType, "id" | "created_at" | "updated_at">;
+type FormType = Omit<
+  QuestionnaireQualifierType,
+  "id" | "created_at" | "updated_at"
+>;
 
-export const CreateQuestionnaire: React.FC<{
-  data?: QuestionnaireType;
+export const CreateQuestionnaireQualifier: React.FC<{
+  data?: QuestionnaireQualifierType;
   isEdit?: boolean;
 }> = ({ data, isEdit }) => {
   const { setModalContent } = useModal();
@@ -31,36 +33,21 @@ export const CreateQuestionnaire: React.FC<{
     watch,
   } = useForm<FormType>({});
 
-  const { data: qualifierData } = useQuery<QuestionnaireQualifierType[]>(
-    ["qualify"],
-    services.getQuestionnaireQualifier,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const formattedQualifiers = qualifierData
-    ? qualifierData.map((item) => ({
-        label: `Qualifier (${item.percentage}%)`,
-        value: item.id.toString(),
-      }))
-    : [];
-
   const values = watch();
 
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
-    mutationFn: services.createQuestionnaires,
+    mutationFn: services.createQuestionnaireQualifier,
     onSuccess: () => {
-      queryClient.invalidateQueries("questionnaire");
+      queryClient.invalidateQueries("qualify");
     },
   });
 
   const ediMutation = useMutation({
-    mutationFn: services.updateQuestionnaire,
+    mutationFn: services.updateQuestionnaireQualifer,
     onSuccess: () => {
-      queryClient.invalidateQueries("questionnaire");
+      queryClient.invalidateQueries("qualify");
     },
   });
 
@@ -69,7 +56,7 @@ export const CreateQuestionnaire: React.FC<{
       ediMutation
         .mutateAsync({ ...values, id: data.id, _method: "put" })
         .then(() => {
-          toast.success("questionnaire updated successfully");
+          toast.success("qualifier updated successfully");
         })
         .catch(() => {
           toast.error("something went wrong, try again");
@@ -85,7 +72,7 @@ export const CreateQuestionnaire: React.FC<{
     createMutation
       .mutateAsync({ ...values })
       .then(() => {
-        toast.success("questionnaire created successfully");
+        toast.success("qualifier created successfully");
       })
       .catch(() => {
         toast.error("something went wrong, try again");
@@ -105,7 +92,7 @@ export const CreateQuestionnaire: React.FC<{
   return (
     <div className="">
       <ModalHeaderContainer>
-        <ModalTitle title="Create Questionnaire" />
+        <ModalTitle title="Create Questionnaire Qualifier" />
         <ModalCloseButton />
       </ModalHeaderContainer>
       <ModalBodyContainer>
@@ -114,47 +101,25 @@ export const CreateQuestionnaire: React.FC<{
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomInput
-            label="Enter questionnaire name"
-            {...register("name", { required: true })}
-            error={errors.name}
-            placeholder="Enter questionnaire name"
+            label="Enter qualifier percentage"
+            {...register("percentage", { required: true })}
+            error={errors.percentage}
+            placeholder="Enter qualifier percentage"
+            type="number"
           />
-          <CustomSelect
-            label="Choose questionnaire qualifier"
-            {...register("qualify_id", { required: true })}
-            error={errors.qualify_id}
-            options={[
-              {
-                label: "Select Qualifier",
-                value: "",
-              },
-              ...formattedQualifiers,
-            ]}
+
+          <CustomInput
+            label="Enter qualifier action (Link)"
+            {...register("action", { required: true })}
+            error={errors.action}
+            placeholder="Enter qualifier action"
           />
-          <CustomSelect
-            label="Choose questionnaire Type"
-            {...register("type", { required: true })}
-            error={errors.type}
-            options={[
-              {
-                label: "Choose type",
-                value: "",
-              },
-              {
-                label: "Assessment",
-                value: "Assessment",
-              },
-              {
-                label: "Opportunity",
-                value: "Opportunity",
-              },
-            ]}
-          />
+
           <CustomTextarea
-            label="Enter questionnaire description"
+            label="Enter description"
             {...register("description")}
             error={errors.description}
-            placeholder="Enter questionnaire description"
+            placeholder="Enter description"
             rows={5}
           />
 

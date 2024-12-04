@@ -180,6 +180,33 @@ const services = {
     );
   },
 
+  async getQuestionnaireQualifier() {
+    const { method, url } = endpoints.dashboard.qualify.get;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
+
+  async createQuestionnaireQualifier(
+    data: types.CreateQuestionnaireQualifierRequestBodyType
+  ) {
+    const { method, url } = endpoints.dashboard.qualify.create;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, data);
+  },
+  async deleteQuestionnaireQualifer(id: number) {
+    const { method, url } = endpoints.dashboard.qualify.delete;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url(id), {});
+  },
+
+  async updateQuestionnaireQualifer(
+    data: types.EditQuestionnaireQualiferRequestBodyType
+  ) {
+    const { method, url } = endpoints.dashboard.qualify.update;
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(data.id),
+      data
+    );
+  },
+
   async getSubmittedResponses() {
     const { method, url } = endpoints.dashboard.forms.get_submitted;
 

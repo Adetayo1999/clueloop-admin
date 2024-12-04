@@ -12,5 +12,6 @@ export const paths = {
     questionnaires: "/questionnaires",
     quesitons: "/questionnaire/:id/questions",
     responses: "/questionnaires/responses",
+    qualifiers: "/questionnaires/qualifiers",
   },
 };

@@ -19,6 +19,7 @@ export interface QuestionnaireType {
   name: string;
   description: string;
   type: "Opportunity" | "Assessment";
+  qualify_id: string;
   created_at: string;
   updated_at: string;
 }
@@ -94,4 +95,13 @@ export interface QuestionResponseType {
   updated_at: string;
   clients: ClientType;
   answers: AnswerType;
+}
+
+export interface QuestionnaireQualifierType {
+  percentage: string;
+  description: string;
+  action: string;
+  updated_at: string;
+  created_at: string;
+  id: number;
 }

@@ -140,5 +140,27 @@ export const endpoints = {
         url: "/forms/get/submitted",
       },
     },
+    qualify: {
+      get: {
+        method: "GET",
+        url: "/qualify",
+      },
+      create: {
+        method: "POST",
+        url: "/qualify",
+      },
+      get_single: {
+        method: "GET",
+        url: (id: number) => `/qualify/${id}`,
+      },
+      update: {
+        method: "POST",
+        url: (id: number) => `/qualify/${id}`,
+      },
+      delete: {
+        method: "DELETE",
+        url: (id: number) => `/qualify/${id}`,
+      },
+    },
   },
 };

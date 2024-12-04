@@ -145,7 +145,7 @@ export const CreateQuestion: React.FC<{
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomTextarea
-            label="Enter questionn"
+            label="Enter question"
             {...register("title", { required: true })}
             error={errors.title}
             placeholder="Enter question"

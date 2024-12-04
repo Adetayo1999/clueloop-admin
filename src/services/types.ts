@@ -66,6 +66,7 @@ export interface CreateQuestionnaireRequestBodyType {
   name: string;
   description: string;
   type: "Opportunity" | "Assessment";
+  qualify_id: string;
 }
 
 export interface EditQuestionnaireRequestBodyType {
@@ -73,6 +74,7 @@ export interface EditQuestionnaireRequestBodyType {
   description: string;
   type: "Opportunity" | "Assessment";
   id: number;
+  qualify_id: string;
   _method: "put";
 }
 
@@ -86,6 +88,18 @@ export interface EditQuestionRequestBodyType {
   title: string;
   category_id: number;
   options: { value: string; score?: string; id: number }[];
+  id: number;
+  _method: "put";
+}
+
+export interface CreateQuestionnaireQualifierRequestBodyType {
+  percentage: number | string;
+  description: string;
+  action: string;
+}
+
+export interface EditQuestionnaireQualiferRequestBodyType
+  extends CreateQuestionnaireQualifierRequestBodyType {
   id: number;
   _method: "put";
 }

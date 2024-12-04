@@ -5,6 +5,7 @@ import { paths } from "./routes/paths";
 import { PostsLayout } from "./components/layout/posts.layout";
 import { EventsLayout } from "./components/layout/events.layout";
 import { CreateBlog } from "./modules/dashboard/create-blog";
+import { QuestionnaireLayout } from "./components/layout/questionnaire.layout";
 
 const Login = lazy(() => import("./modules/auth/login"));
 const Home = lazy(() => import("./modules/dashboard/home"));
@@ -18,6 +19,9 @@ const Questionnaire = lazy(() => import("./modules/dashboard/questionnaire"));
 const Questions = lazy(() => import("./modules/dashboard/questions"));
 const QuestionnaireResponses = lazy(
   () => import("./modules/dashboard/questionnaire-responses")
+);
+const QuestionnaireQualifier = lazy(
+  () => import("./modules/dashboard/qualifier")
 );
 
 function App() {
@@ -83,30 +87,40 @@ function App() {
           />
         </Route>
 
-        <Route
-          element={
-            <React.Suspense fallback={<p>Loading....</p>}>
-              <Questionnaire />
-            </React.Suspense>
-          }
-          path={paths.dashboard.questionnaires}
-        />
-        <Route
-          element={
-            <React.Suspense fallback={<p>Loading....</p>}>
-              <Questions />
-            </React.Suspense>
-          }
-          path={paths.dashboard.quesitons}
-        />
-        <Route
-          element={
-            <React.Suspense fallback={<p>Loading....</p>}>
-              <QuestionnaireResponses />
-            </React.Suspense>
-          }
-          path={paths.dashboard.responses}
-        />
+        <Route element={<QuestionnaireLayout />}>
+          <Route
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <Questionnaire />
+              </React.Suspense>
+            }
+            path={paths.dashboard.questionnaires}
+          />
+          <Route
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <Questions />
+              </React.Suspense>
+            }
+            path={paths.dashboard.quesitons}
+          />
+          <Route
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <QuestionnaireResponses />
+              </React.Suspense>
+            }
+            path={paths.dashboard.responses}
+          />
+          <Route
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <QuestionnaireQualifier />
+              </React.Suspense>
+            }
+            path={paths.dashboard.qualifiers}
+          />
+        </Route>
         <Route path="*" element={<p>ROUTE NOT FOUND</p>} />
       </Route>
     </Routes>
