@@ -36,11 +36,6 @@ export const QuestionnaireLayout = () => {
                 Icon: ClipboardDocumentListIcon,
                 path: paths.dashboard.qualifiers,
               },
-              {
-                title: "Questionnaire Responses",
-                Icon: ClipboardDocumentListIcon,
-                path: paths.dashboard.responses,
-              },
             ].map((item, idx) => (
               <NavLink
                 key={idx}

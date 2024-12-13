@@ -68,6 +68,15 @@ export interface QuestionType {
   }[];
 }
 
+export interface OptionType {
+  created_at: string;
+  id: number;
+  question_id: number;
+  score: number;
+  updated_at: string;
+  value: string;
+}
+
 export interface AnswerType {
   id: number;
   question_id: number;
@@ -75,6 +84,8 @@ export interface AnswerType {
   forms_id: number;
   created_at: string;
   updated_at: string;
+  option: OptionType;
+  question: Omit<QuestionType, "options">;
 }
 
 export interface ClientType {
@@ -90,11 +101,17 @@ export interface ClientType {
 export interface QuestionResponseType {
   id: number;
   clients_id: number;
-  status: true;
+  status: boolean;
   created_at: string;
   updated_at: string;
   clients: ClientType;
-  answers: AnswerType;
+  answers: AnswerType[];
+  percentage: number;
+}
+
+export interface SubmittedResponsesType {
+  category: QuestionnaireType;
+  data: QuestionResponseType[];
 }
 
 export interface QuestionnaireQualifierType {

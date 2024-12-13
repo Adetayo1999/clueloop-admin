@@ -11,7 +11,7 @@ export const paths = {
     create_blog: "/blogs/:id",
     questionnaires: "/questionnaires",
     quesitons: "/questionnaire/:id/questions",
-    responses: "/questionnaires/responses",
+    responses: "/questionnaires/:id/responses",
     qualifiers: "/questionnaires/qualifiers",
   },
 };

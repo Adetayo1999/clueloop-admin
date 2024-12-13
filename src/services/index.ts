@@ -207,10 +207,14 @@ const services = {
     );
   },
 
-  async getSubmittedResponses() {
+  async getSubmittedResponses(category_id: number) {
     const { method, url } = endpoints.dashboard.forms.get_submitted;
 
-    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(category_id),
+      {}
+    );
   },
 };
 

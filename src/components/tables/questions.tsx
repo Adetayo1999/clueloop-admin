@@ -22,6 +22,7 @@ export const QuestionsTable = () => {
     () => services.getAllQuestionnaireQuestions(Number(id)),
     {
       refetchOnWindowFocus: false,
+      enabled: Boolean(id),
       onError(error) {
         if (error instanceof Error) {
           toast.error(error.message);

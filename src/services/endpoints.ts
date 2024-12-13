@@ -137,7 +137,7 @@ export const endpoints = {
     forms: {
       get_submitted: {
         method: "GET",
-        url: "/forms/get/submitted",
+        url: (id: number) => `/forms/get/submitted/${id}`,
       },
     },
     qualify: {

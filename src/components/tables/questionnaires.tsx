@@ -122,6 +122,19 @@ export const QuestionnairesTable = () => {
           >
             <EyeIcon className="size-5 text-white" />
           </button>
+          <button
+            className="bg-primary h-[2.5rem]  duration-100 transition px-4 py-2 rounded-md flex justify-center items-center text-white font-semibold"
+            onClick={() =>
+              navigate(
+                paths.dashboard.responses.replace(
+                  ":id",
+                  info.row.original.id.toString()
+                )
+              )
+            }
+          >
+            View Responses
+          </button>
         </div>
       ),
     }),
