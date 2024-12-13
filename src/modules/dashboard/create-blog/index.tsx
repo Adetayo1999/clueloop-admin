@@ -19,6 +19,8 @@ import toast from "react-hot-toast";
 interface CreateBlogFormType {
   title: string;
   category_id: number;
+  authors: string;
+  snippets: string;
 }
 
 function isNumber(str: string) {
@@ -109,6 +111,8 @@ export const CreateBlog = () => {
     if (isEdit && singlePost) {
       setFormValue("title", singlePost.title);
       setFormValue("category_id", singlePost.category_id);
+      setFormValue("authors", singlePost.authors);
+      setFormValue("snippets", singlePost.snippets);
       setValue(singlePost.content);
       setImagePreview(singlePost.banner);
     }
@@ -167,11 +171,16 @@ export const CreateBlog = () => {
         return;
       }
 
+      if (!image) {
+        toast.error("Banner image required");
+        return;
+      }
+
       const response = await mutation.mutateAsync({
         ...data,
         user_id: fetchUserData()!.id,
         content: value,
-        banner: image!,
+        banner: image,
       });
 
       toast.success("Post created successfully");
@@ -217,10 +226,16 @@ export const CreateBlog = () => {
             placeholder="Enter title"
             {...register("title", { required: true })}
           />
+          <CustomInput
+            label="Post Author"
+            placeholder="Enter post author"
+            {...register("authors", { required: true })}
+          />
           <CustomTextarea
-            label="Post Metadata"
-            placeholder="Enter post metadata"
+            label="Post Description"
+            placeholder="Enter post description"
             rows={5}
+            {...register("snippets", { required: true })}
           />
           <CustomSelect
             label="Post Category"

@@ -140,7 +140,7 @@ const services = {
 
   async createQuestionnaires(data: types.CreateQuestionnaireRequestBodyType) {
     const { method, url } = endpoints.dashboard.questionnaire.create;
-    return makeAuthorizedRequestWithHeadersAndPayload(method, url, data);
+    return makeRequestWithFormData(method, url, data, true);
   },
   async deleteQuestionnaire(id: number) {
     const { method, url } = endpoints.dashboard.questionnaire.delete;
@@ -149,11 +149,7 @@ const services = {
 
   async updateQuestionnaire(data: types.EditQuestionnaireRequestBodyType) {
     const { method, url } = endpoints.dashboard.questionnaire.update;
-    return makeAuthorizedRequestWithHeadersAndPayload(
-      method,
-      url(data.id),
-      data
-    );
+    return makeRequestWithFormData(method, url(data.id), data, true);
   },
 
   //qiestionnaire

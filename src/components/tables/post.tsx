@@ -67,8 +67,14 @@ export const PostsTable = () => {
     columnHelper.accessor("title", {
       header: "Title",
       cell: (info) => (
-        <p className="w-[18rem]  whitespace-normal">{info.getValue()}</p>
+        <p className="w-[14rem] line-clamp-3  whitespace-normal">
+          {info.getValue()}
+        </p>
       ),
+    }),
+    columnHelper.accessor("authors", {
+      header: "Author",
+      cell: (info) => <p className="">{info.getValue()}</p>,
     }),
     columnHelper.accessor("is_published", {
       header: "Status",

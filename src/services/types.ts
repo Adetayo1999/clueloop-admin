@@ -13,13 +13,15 @@ export interface CreatePostRequestBodyType {
   content: string;
   category_id: number;
   user_id: number;
-  banner: File | string;
+  banner: File;
+  authors: string;
+  snippets: string;
 }
 
 export interface CreatePostCategoryRequestBodyType {
   name: string;
   description: string;
-  banner: File | string;
+  banner?: File;
 }
 
 export interface UpdatePostCategoryRequestBodyType {
@@ -65,17 +67,17 @@ export interface UpdateEventRequestBodyType {
 export interface CreateQuestionnaireRequestBodyType {
   name: string;
   description: string;
+  banner: File;
   type: "Opportunity" | "Assessment";
-  qualify_id: string;
 }
 
 export interface EditQuestionnaireRequestBodyType {
   name: string;
   description: string;
-  type: "Opportunity" | "Assessment";
   id: number;
-  qualify_id: string;
   _method: "put";
+  banner?: File;
+  type: "Opportunity" | "Assessment";
 }
 
 export interface CreateQuestionRequestBodyType {

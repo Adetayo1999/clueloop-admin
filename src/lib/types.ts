@@ -18,10 +18,10 @@ export interface QuestionnaireType {
   id: number;
   name: string;
   description: string;
-  type: "Opportunity" | "Assessment";
-  qualify_id: string;
   created_at: string;
+  banner: string;
   updated_at: string;
+  type: "Opportunity" | "Assessment";
 }
 
 export interface UserDataType {
@@ -40,6 +40,8 @@ export interface PostType {
   is_published: boolean;
   created_at: string;
   updated_at: string;
+  authors: string;
+  snippets: string;
 }
 
 export interface EventType {
