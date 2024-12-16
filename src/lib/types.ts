@@ -112,15 +112,17 @@ export interface QuestionResponseType {
 }
 
 export interface SubmittedResponsesType {
-  category: QuestionnaireType;
+  category: QuestionnaireType[];
   data: QuestionResponseType[];
 }
 
 export interface QuestionnaireQualifierType {
-  percentage: string;
   description: string;
   action: string;
   updated_at: string;
   created_at: string;
   id: number;
+  maximum_percentage: string;
+  minimum_percentage: string;
+  category_id: number;
 }

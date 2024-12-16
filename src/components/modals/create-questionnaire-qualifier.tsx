@@ -8,12 +8,13 @@ import {
   ModalTitle,
 } from "../modal";
 import services from "../../services";
-import { useMutation, useQueryClient } from "react-query";
-import { QuestionnaireQualifierType } from "../../lib/types";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QuestionnaireQualifierType, QuestionnaireType } from "../../lib/types";
 import { useModal } from "../../context/modal";
 import CustomTextarea from "../textarea";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import CustomSelect from "../custom-select";
 
 type FormType = Omit<
   QuestionnaireQualifierType,
@@ -32,6 +33,25 @@ export const CreateQuestionnaireQualifier: React.FC<{
     handleSubmit,
     watch,
   } = useForm<FormType>({});
+
+  const {
+    data: questionniareData,
+    isLoading,
+    isFetching,
+  } = useQuery<QuestionnaireType[]>(
+    ["questionnaire"],
+    services.getQuestionnaires,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const formattedQuestionnaires = questionniareData
+    ? questionniareData.map((item) => ({
+        label: item.name,
+        value: item.id.toString(),
+      }))
+    : [];
 
   const values = watch();
 
@@ -100,10 +120,26 @@ export const CreateQuestionnaireQualifier: React.FC<{
           className="flex flex-col gap-y-8"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <CustomSelect
+            options={[
+              { label: "Select questionnaire", value: "" },
+              ...formattedQuestionnaires,
+            ]}
+            label="Enter questionnaire"
+            {...register("category_id", { required: true })}
+            error={errors.category_id}
+          />
           <CustomInput
-            label="Enter qualifier percentage"
-            {...register("percentage", { required: true })}
-            error={errors.percentage}
+            label="Enter qualifier maximum percentage"
+            {...register("maximum_percentage", { required: true })}
+            error={errors.maximum_percentage}
+            placeholder="Enter qualifier percentage"
+            type="number"
+          />
+          <CustomInput
+            label="Enter qualifier minimum percentage"
+            {...register("minimum_percentage", { required: true })}
+            error={errors.minimum_percentage}
             placeholder="Enter qualifier percentage"
             type="number"
           />
@@ -127,7 +163,12 @@ export const CreateQuestionnaireQualifier: React.FC<{
             <ModalButton
               text="Submit"
               variant="primary"
-              loading={createMutation.isLoading || ediMutation.isLoading}
+              loading={
+                createMutation.isLoading ||
+                ediMutation.isLoading ||
+                isLoading ||
+                isFetching
+              }
               disabled={JSON.stringify(values) === JSON.stringify(data)}
             />
           </div>

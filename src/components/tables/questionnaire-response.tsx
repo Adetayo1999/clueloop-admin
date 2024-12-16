@@ -109,6 +109,7 @@ export const QuestionnaireResponsesTable = () => {
       <div className="">
         <div className="mb-5 flex justify-between items-center">
           <h3 className="font-semibold text-gray-800 dark:text-gray-50 text-xl">
+            {data && data.category.length ? data.category[0].name + "'s" : ""}{" "}
             Questionnaire Responses
           </h3>
           <Button

@@ -49,10 +49,13 @@ export const QuestionnaireQualifierTable = () => {
       id: "index",
     },
 
-    columnHelper.accessor("percentage", {
-      header: "Qualifying Percentage",
-      cell: (info) => <p>{info.getValue()}%</p>,
-    }),
+    columnHelper.accessor(
+      (data) => `${data.maximum_percentage}% - ${data.minimum_percentage}%`,
+      {
+        header: "Qualifying Percentage Range",
+        cell: (info) => <p>{info.getValue()}</p>,
+      }
+    ),
     columnHelper.accessor("action", {
       header: "Qualifier Action",
       cell: (info) => <p>{info.getValue()}</p>,

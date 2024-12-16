@@ -95,9 +95,11 @@ export interface EditQuestionRequestBodyType {
 }
 
 export interface CreateQuestionnaireQualifierRequestBodyType {
-  percentage: number | string;
   description: string;
   action: string;
+  maximum_percentage: string;
+  minimum_percentage: string;
+  category_id: number;
 }
 
 export interface EditQuestionnaireQualiferRequestBodyType
