@@ -58,7 +58,7 @@ export const QuestionnairesTable = () => {
     },
 
     columnHelper.accessor("name", {
-      header: "Name",
+      header: "Questionnaire Title",
       cell: (info) => (
         <p className="w-[10rem]  whitespace-normal">{info.getValue()}</p>
       ),
