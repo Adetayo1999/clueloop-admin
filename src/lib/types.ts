@@ -125,4 +125,5 @@ export interface QuestionnaireQualifierType {
   maximum_percentage: string;
   minimum_percentage: string;
   category_id: number;
+  category: QuestionnaireType;
 }

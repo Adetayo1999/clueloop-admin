@@ -153,7 +153,7 @@ export const CreateQuestionnaireQualifier: React.FC<{
 
           <CustomTextarea
             label="Enter description"
-            {...register("description")}
+            {...register("description", { required: true })}
             error={errors.description}
             placeholder="Enter description"
             rows={5}

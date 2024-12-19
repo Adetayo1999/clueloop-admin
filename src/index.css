@@ -41,3 +41,8 @@ body {
   font-style: italic;
   pointer-events: none;
 }
+
+.ql-editor img {
+  width: 100%;
+  min-height: 20rem;
+}

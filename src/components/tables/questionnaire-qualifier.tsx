@@ -56,6 +56,10 @@ export const QuestionnaireQualifierTable = () => {
         cell: (info) => <p>{info.getValue()}</p>,
       }
     ),
+    columnHelper.accessor("category", {
+      header: "Questionnaire Title",
+      cell: (info) => <p>{info.getValue()?.name || "NIL"}</p>,
+    }),
     columnHelper.accessor("action", {
       header: "Qualifier Action",
       cell: (info) => <p>{info.getValue()}</p>,

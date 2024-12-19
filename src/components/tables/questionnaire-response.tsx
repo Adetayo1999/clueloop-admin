@@ -3,7 +3,11 @@ import { CustomTable } from "../table";
 import { formatDate } from "../../lib/format-date";
 import services from "../../services";
 import { useQuery } from "react-query";
-import { QuestionResponseType, SubmittedResponsesType } from "../../lib/types";
+import {
+  AnswerType,
+  QuestionResponseType,
+  SubmittedResponsesType,
+} from "../../lib/types";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../button";
@@ -35,10 +39,17 @@ export const QuestionnaireResponsesTable = () => {
     }
   );
 
-  const columnHelper = createColumnHelper<QuestionResponseType>();
-
   const handleExportData = () => {
     if (!data || data?.data?.length === 0) return;
+
+    const questionsList = (data: AnswerType[]) => {
+      const extractedAnswers: Record<string, string> = {};
+      data.forEach((item, idx) => {
+        extractedAnswers[`Question ${idx + 1}`] = item.question.title;
+      });
+
+      return extractedAnswers;
+    };
 
     const dataToExport = data.data.map((item, idx) => ({
       ID: idx + 1,
@@ -46,11 +57,14 @@ export const QuestionnaireResponsesTable = () => {
       "Full Name": `${item.clients.first_name} ${item.clients.last_name}`,
       "Phone Number": item.clients.phone_number,
       Score: item.percentage.toFixed(2),
+      ...questionsList(item.answers),
       "Date Submitted": formatDate(item.created_at),
     }));
 
     exportToExcel(dataToExport, "questionniare_response");
   };
+
+  const columnHelper = createColumnHelper<QuestionResponseType>();
 
   const columns = [
     {
@@ -88,20 +102,27 @@ export const QuestionnaireResponsesTable = () => {
       header: "Date Created",
       cell: (info) => <p>{formatDate(info.getValue())}</p>,
     }),
-    columnHelper.accessor(() => "action", {
-      header: "Action",
-      id: "action",
-      cell: (info) => (
-        <div className="">
-          <button
-            className="bg-primary h-[2.5rem]  duration-100 transition px-4 py-2 rounded-md  text-sm flex justify-center items-center text-white font-medium"
-            onClick={() => setSelectedResponse(info.row.original)}
-          >
-            View Questions
-          </button>
-        </div>
-      ),
-    }),
+    // columnHelper.accessor(() => "action", {
+    //   header: "Action",
+    //   id: "action",
+    //   cell: (info) => (
+    //     <div className="">
+    //       <button
+    //         className="bg-primary h-[2.5rem]  duration-100 transition px-4 py-2 rounded-md  text-sm flex justify-center items-center text-white font-medium"
+    //         onClick={() => setSelectedResponse(info.row.original)}
+    //       >
+    //         View Questions
+    //       </button>
+    //     </div>
+    //   ),
+    // }),
+    ...Array.from({ length: data?.data[0]?.answers.length || 0 }, (_, index) =>
+      columnHelper.accessor((row) => row.answers[index]?.question.title || "", {
+        header: `Question ${index + 1}`,
+        cell: (info) => <p>{info.getValue()}</p>,
+        id: `q${index + 1}`, // Unique ID for each column
+      })
+    ),
   ];
 
   return (
