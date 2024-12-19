@@ -130,16 +130,16 @@ export const CreateQuestionnaireQualifier: React.FC<{
             error={errors.category_id}
           />
           <CustomInput
-            label="Enter qualifier maximum percentage"
-            {...register("maximum_percentage", { required: true })}
-            error={errors.maximum_percentage}
+            label="Enter qualifier minimum percentage"
+            {...register("minimum_percentage", { required: true })}
+            error={errors.minimum_percentage}
             placeholder="Enter qualifier percentage"
             type="number"
           />
           <CustomInput
-            label="Enter qualifier minimum percentage"
-            {...register("minimum_percentage", { required: true })}
-            error={errors.minimum_percentage}
+            label="Enter qualifier maximum percentage"
+            {...register("maximum_percentage", { required: true })}
+            error={errors.maximum_percentage}
             placeholder="Enter qualifier percentage"
             type="number"
           />
