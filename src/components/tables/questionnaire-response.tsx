@@ -60,6 +60,7 @@ export const QuestionnaireResponsesTable = () => {
       "Full Name": `${item.clients.first_name} ${item.clients.last_name}`,
       "Phone Number": item.clients.phone_number,
       Score: item.percentage.toFixed(2),
+      "Meeting Booked": "NO",
       ...questionsList(item.answers),
       "Date Submitted": formatDate(item.created_at),
     }));
