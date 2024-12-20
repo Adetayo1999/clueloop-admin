@@ -110,6 +110,11 @@ export const QuestionnaireResponsesTable = () => {
       cell: (info) => <p className="">{info.getValue()}</p>,
     }),
 
+    columnHelper.accessor(() => "NO", {
+      header: "Meeting Booked",
+      cell: (info) => <p className="">{info.getValue()}</p>,
+    }),
+
     columnHelper.accessor("percentage", {
       header: "Score",
       cell: (info) => (
@@ -130,7 +135,7 @@ export const QuestionnaireResponsesTable = () => {
         <div className="mb-5 flex justify-between items-center">
           <div className="flex gap-x-8 items-center">
             <button
-              className="bg-green-600 px-5 py-2 rounded flex justify-center items-center text-white"
+              className="bg-primary px-5 py-2 rounded flex justify-center items-center text-white"
               onClick={() => navigate(-1)}
             >
               <ArrowLongLeftIcon className="size-5" />
