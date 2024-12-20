@@ -29,16 +29,13 @@ export const CreateQuestionnaire: React.FC<{
 }> = ({ data, isEdit }) => {
   const { setModalContent } = useModal();
   const [banner, setBanner] = useState<File>();
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(data?.banner || "");
   const {
     register,
     reset,
     formState: { errors },
     handleSubmit,
-    watch,
   } = useForm<FormType>({});
-
-  const values = watch();
 
   const queryClient = useQueryClient();
 
@@ -188,7 +185,7 @@ export const CreateQuestionnaire: React.FC<{
 
           <CustomTextarea
             label="Enter questionnaire description"
-            {...register("description")}
+            {...register("description", { required: true })}
             error={errors.description}
             placeholder="Enter questionnaire description"
             rows={5}
@@ -199,7 +196,6 @@ export const CreateQuestionnaire: React.FC<{
               text="Submit"
               variant="primary"
               loading={createMutation.isLoading || ediMutation.isLoading}
-              disabled={JSON.stringify(values) === JSON.stringify(data)}
             />
           </div>
         </form>
