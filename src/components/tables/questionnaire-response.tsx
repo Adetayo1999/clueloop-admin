@@ -11,7 +11,10 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../button";
-import { InboxArrowDownIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLongLeftIcon,
+  InboxArrowDownIcon,
+} from "@heroicons/react/24/solid";
 import { exportToExcel } from "../../lib/excel-generator";
 import { ViewAnsweredQuestionsModal } from "../modals/view-answered-questions";
 import { useState } from "react";
@@ -44,8 +47,8 @@ export const QuestionnaireResponsesTable = () => {
 
     const questionsList = (data: AnswerType[]) => {
       const extractedAnswers: Record<string, string> = {};
-      data.forEach((item, idx) => {
-        extractedAnswers[`Question ${idx + 1}`] = item.question.title;
+      data.forEach((item) => {
+        extractedAnswers[`${item.question.title}`] = item.option.value;
       });
 
       return extractedAnswers;
@@ -64,8 +67,24 @@ export const QuestionnaireResponsesTable = () => {
     exportToExcel(dataToExport, "questionniare_response");
   };
 
-  const columnHelper = createColumnHelper<QuestionResponseType>();
+  // Dynamic columns for questions and answers
+  const getDynamicColumns = (data: QuestionResponseType[]) => {
+    if (!data.length || !data[0]?.answers) return [];
 
+    // Use the first record to extract questions
+    return data[0].answers.map((answer, index) =>
+      columnHelper.accessor(
+        (row) => row.answers[index]?.option.value || "", // Get the corresponding answer for the question
+        {
+          header: answer.question.title, // Use the question as the header
+          cell: (info) => <p>{info.getValue()}</p>,
+          id: `q${index + 1}`, // Unique ID for each column
+        }
+      )
+    );
+  };
+
+  const columnHelper = createColumnHelper<QuestionResponseType>();
   const columns = [
     {
       header: "#", // Header for the index column
@@ -102,37 +121,25 @@ export const QuestionnaireResponsesTable = () => {
       header: "Date Created",
       cell: (info) => <p>{formatDate(info.getValue())}</p>,
     }),
-    // columnHelper.accessor(() => "action", {
-    //   header: "Action",
-    //   id: "action",
-    //   cell: (info) => (
-    //     <div className="">
-    //       <button
-    //         className="bg-primary h-[2.5rem]  duration-100 transition px-4 py-2 rounded-md  text-sm flex justify-center items-center text-white font-medium"
-    //         onClick={() => setSelectedResponse(info.row.original)}
-    //       >
-    //         View Questions
-    //       </button>
-    //     </div>
-    //   ),
-    // }),
-    ...Array.from({ length: data?.data[0]?.answers.length || 0 }, (_, index) =>
-      columnHelper.accessor((row) => row.answers[index]?.question.title || "", {
-        header: `Question ${index + 1}`,
-        cell: (info) => <p>{info.getValue()}</p>,
-        id: `q${index + 1}`, // Unique ID for each column
-      })
-    ),
+    ...getDynamicColumns(data?.data || []),
   ];
 
   return (
     <>
       <div className="">
         <div className="mb-5 flex justify-between items-center">
-          <h3 className="font-semibold text-gray-800 dark:text-gray-50 text-xl">
-            {data && data.category.length ? data.category[0].name + "'s" : ""}{" "}
-            Questionnaire Responses
-          </h3>
+          <div className="flex gap-x-8 items-center">
+            <button
+              className="bg-green-600 px-5 py-2 rounded flex justify-center items-center text-white"
+              onClick={() => navigate(-1)}
+            >
+              <ArrowLongLeftIcon className="size-5" />
+            </button>
+            <h3 className="font-semibold text-gray-800 dark:text-gray-50 text-xl">
+              {data && data.category.length ? data.category[0].name + "'s" : ""}{" "}
+              Questionnaire Responses
+            </h3>
+          </div>
           <Button
             className="flex items-center gap-x-2 bg-green-600 hover:bg-green-800 text-white font-semibold text-sm rounded-full"
             onClick={handleExportData}
