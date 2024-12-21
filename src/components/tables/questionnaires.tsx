@@ -13,7 +13,7 @@ import { QuestionnaireType } from "../../lib/types";
 import { DeleteDialogModal } from "../modals/delete-dialog";
 import toast from "react-hot-toast";
 import { CreateQuestionnaire } from "../modals/create-questionnaire";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/paths";
 
 export const QuestionnairesTable = () => {
@@ -61,6 +61,19 @@ export const QuestionnairesTable = () => {
       header: "Questionnaire Title",
       cell: (info) => (
         <p className="w-[10rem]  whitespace-normal">{info.getValue()}</p>
+      ),
+    }),
+
+    columnHelper.accessor(() => "link", {
+      header: "Questionnaire Link",
+      cell: (info) => (
+        <Link
+          to={`https://clueloop-6jqz.vercel.app/assessment?id=${info.row.original.id}`}
+          target="_blank"
+          className="underline"
+        >
+          https://clueloop-6jqz.vercel.app/assessment?id={info.row.original.id}
+        </Link>
       ),
     }),
 
