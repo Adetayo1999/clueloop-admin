@@ -70,12 +70,24 @@ export const QuestionnaireResponsesTable = () => {
 
   // Dynamic columns for questions and answers
   const getDynamicColumns = (data: QuestionResponseType[]) => {
-    if (!data.length || !data[0]?.answers) return [];
+    if (!data.length) return [];
+
+    let length = 0;
+    let index = 0;
+
+    data.forEach((data, idx) => {
+      if (data?.answers?.length > length) {
+        length = data.answers.length;
+        index = idx;
+      }
+    });
+
+    if (length === 0) return [];
 
     // Use the first record to extract questions
-    return data[0].answers.map((answer, index) =>
+    return data[index].answers.map((answer, index) =>
       columnHelper.accessor(
-        (row) => row.answers[index]?.option.value || "", // Get the corresponding answer for the question
+        (row) => row.answers?.[index]?.option?.value || "NIL", // Get the corresponding answer for the question
         {
           header: answer.question.title, // Use the question as the header
           cell: (info) => <p>{info.getValue()}</p>,
