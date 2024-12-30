@@ -128,3 +128,10 @@ export interface QuestionnaireQualifierType {
   category_id: number;
   category: QuestionnaireType;
 }
+
+export interface NewsletterType {
+  id: number;
+  email: string;
+  created_at: string;
+  updated_at: string;
+}

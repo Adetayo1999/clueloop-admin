@@ -228,6 +228,11 @@ const services = {
       {}
     );
   },
+
+  async getNewsletterSubmissions() {
+    const { method, url } = endpoints.dashboard.newsletter.get;
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
 };
 
 export default services;

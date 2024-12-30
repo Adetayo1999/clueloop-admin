@@ -23,12 +23,21 @@ const QuestionnaireResponses = lazy(
 const QuestionnaireQualifier = lazy(
   () => import("./modules/dashboard/qualifier")
 );
+const NewsletterPage = lazy(() => import("./modules/dashboard/newsletter"));
 
 function App() {
   return (
     <Routes>
       <Route path={paths.auth.login} element={<Login />} />
       <Route element={<ProtectedLayout />}>
+        <Route
+          element={
+            <React.Suspense fallback={<p>Loading....</p>}>
+              <NewsletterPage />
+            </React.Suspense>
+          }
+          path={paths.dashboard.newsletter}
+        />
         <Route
           path={paths.dashboard.home}
           index

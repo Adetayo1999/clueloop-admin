@@ -353,7 +353,7 @@ export const CreateBlog = () => {
         <div className="absolute bottom-8 w-fit flex flex-col gap-y-3">
           {isEdit && singlePost && !singlePost.is_selected && (
             <button
-              className="bg-primary hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              className="bg-primary hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={handleSelect}
               disabled={!isEdit || !singlePost || selectMutation.isLoading}
             >
@@ -363,7 +363,7 @@ export const CreateBlog = () => {
 
           {isEdit && singlePost && !singlePost?.is_published ? (
             <button
-              className="bg-green-500 right-5 absolute bottom-8 w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              className="bg-green-500 text-sm w-fit  text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={handlePublish}
               disabled={!isEdit || !singlePost || publishMutation.isLoading}
             >

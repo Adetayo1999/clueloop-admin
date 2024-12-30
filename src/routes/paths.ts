@@ -13,5 +13,6 @@ export const paths = {
     quesitons: "/questionnaire/:id/questions",
     responses: "/questionnaires/:id/responses",
     qualifiers: "/questionnaires/qualifiers",
+    newsletter: "/newsletter",
   },
 };

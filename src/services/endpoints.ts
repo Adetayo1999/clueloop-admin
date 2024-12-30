@@ -9,6 +9,7 @@ export const endpoints = {
       url: "/register",
     },
   },
+
   dashboard: {
     post_category: {
       create: {
@@ -164,6 +165,12 @@ export const endpoints = {
       delete: {
         method: "DELETE",
         url: (id: number) => `/qualify/${id}`,
+      },
+    },
+    newsletter: {
+      get: {
+        method: "GET",
+        url: "/news-letter",
       },
     },
   },
