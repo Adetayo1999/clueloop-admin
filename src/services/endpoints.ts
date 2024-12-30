@@ -71,6 +71,10 @@ export const endpoints = {
         method: "PUT",
         url: (id: number) => `/posts/publish/${id}`,
       },
+      select: {
+        method: "PUT",
+        url: (id: number) => `/posts/selected/${id}`,
+      },
     },
     event: {
       get: {

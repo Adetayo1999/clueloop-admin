@@ -74,6 +74,22 @@ const services = {
     );
   },
 
+  async selectPost(data: {
+    title: string;
+    content: string;
+    category_id: number;
+    user_id: number;
+    id: number;
+  }) {
+    const { method, url } = endpoints.dashboard.post.select;
+
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(data.id),
+      data
+    );
+  },
+
   // event category
   async getEventsCategory() {
     const { method, url } = endpoints.dashboard.event_category.get;

@@ -74,7 +74,7 @@ const CustomEditor: React.FC<
   };
 
   return (
-    <div className="custom-editor">
+    <div className="custom-editor z-[100000] relative">
       <ReactQuill
         theme="snow"
         value={value}

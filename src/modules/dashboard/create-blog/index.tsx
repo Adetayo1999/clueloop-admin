@@ -107,6 +107,24 @@ export const CreateBlog = () => {
     },
   });
 
+  const selectMutation = useMutation({
+    mutationFn: services.selectPost,
+    onSuccess: () => {
+      // Invalidate and refetch posts after a successful mutation
+      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries("singlePost");
+
+      toast.success("Post indexed on the landing page");
+    },
+    onError(error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        return;
+      }
+      toast.error("Something went wrong.");
+    },
+  });
+
   useEffect(() => {
     if (isEdit && singlePost) {
       setFormValue("title", singlePost.title);
@@ -199,6 +217,12 @@ export const CreateBlog = () => {
     if (!isEdit || !singlePost) return;
 
     publishMutation.mutate(singlePost);
+  };
+
+  const handleSelect = () => {
+    if (!isEdit || !singlePost) return;
+
+    selectMutation.mutate(singlePost);
   };
 
   return (
@@ -326,15 +350,27 @@ export const CreateBlog = () => {
           </div>
         </form>
 
-        {isEdit && singlePost && !singlePost?.is_published ? (
-          <button
-            className="bg-green-500 right-5 absolute bottom-8 w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
-            onClick={handlePublish}
-            disabled={!isEdit || !singlePost || publishMutation.isLoading}
-          >
-            Publish
-          </button>
-        ) : null}
+        <div className="absolute bottom-8 w-fit flex flex-col gap-y-3">
+          {isEdit && singlePost && !singlePost.is_selected && (
+            <button
+              className="bg-primary hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              onClick={handleSelect}
+              disabled={!isEdit || !singlePost || selectMutation.isLoading}
+            >
+              Add Post To Home Page
+            </button>
+          )}
+
+          {isEdit && singlePost && !singlePost?.is_published ? (
+            <button
+              className="bg-green-500 right-5 absolute bottom-8 w-fit text-white transition duration-300 min-w-[10rem]  rounded-md px-8 py-2 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              onClick={handlePublish}
+              disabled={!isEdit || !singlePost || publishMutation.isLoading}
+            >
+              Publish
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );

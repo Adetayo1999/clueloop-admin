@@ -79,14 +79,25 @@ export const PostsTable = () => {
     columnHelper.accessor("is_published", {
       header: "Status",
       cell: (info) => (
-        <button
-          className={clsx(
-            "px-5 text-xs flex justify-center min-w-[7rem] items-center font-semibold py-2 text-white rounded",
-            info.getValue() ? "bg-green-600" : "bg-yellow-600"
+        <div className="flex items-center gap-x-3">
+          <button
+            className={clsx(
+              "px-5 text-xs flex justify-center min-w-[7rem] items-center font-semibold py-2 text-white rounded",
+              info.getValue() ? "bg-green-600" : "bg-yellow-600"
+            )}
+          >
+            {info.getValue() ? "Published" : "Draft"}
+          </button>
+          {Boolean(info.row.original.is_selected) && (
+            <button
+              className={clsx(
+                "px-5 text-xs flex justify-center min-w-[7rem] items-center font-semibold py-2 text-white rounded bg-primary"
+              )}
+            >
+              Indexed Post
+            </button>
           )}
-        >
-          {info.getValue() ? "Published" : "Draft"}
-        </button>
+        </div>
       ),
     }),
     columnHelper.accessor("created_at", {

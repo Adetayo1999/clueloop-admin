@@ -42,6 +42,7 @@ export interface PostType {
   updated_at: string;
   authors: string;
   snippets: string;
+  is_selected: number;
 }
 
 export interface EventType {
