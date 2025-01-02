@@ -240,7 +240,7 @@ export const CreateBlog = () => {
         </div>
         <CustomEditor value={value} setValue={setValue} />
       </div>
-      <div className="flex-[0.3] relative py-10 px-5 border-l dark:border-gray-500 dark:border-opacity-40">
+      <div className="flex-[0.3] relative py-10 px-5 border-l dark:border-gray-500 dark:border-opacity-40 overflow-y-auto">
         <form
           className="flex flex-col gap-y-4 "
           onSubmit={handleSubmit(onSubmit)}
@@ -350,7 +350,7 @@ export const CreateBlog = () => {
           </div>
         </form>
 
-        <div className="absolute bottom-8 w-fit flex flex-col gap-y-3">
+        <div className=" mt-10 w-fit flex flex-col gap-y-3">
           {isEdit && singlePost && !singlePost.is_selected && (
             <button
               className="bg-primary hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
