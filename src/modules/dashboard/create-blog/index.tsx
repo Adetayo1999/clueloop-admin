@@ -169,7 +169,7 @@ export const CreateBlog = () => {
       "image/jpg": [".jpg"],
     },
     onDrop: onImageDrop,
-    maxSize: 5120000,
+    maxSize: 1500000,
   });
 
   const onSubmit: SubmitHandler<CreateBlogFormType> = async (data) => {
@@ -350,24 +350,44 @@ export const CreateBlog = () => {
           </div>
         </form>
 
-        <div className=" mt-10 w-fit flex flex-col gap-y-3">
-          {isEdit && singlePost && !singlePost.is_selected && (
+        <div className=" mt-10  flex flex-col gap-y-3">
+          {isEdit && singlePost && !singlePost.is_selected ? (
             <button
               className="bg-primary hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={handleSelect}
               disabled={!isEdit || !singlePost || selectMutation.isLoading}
             >
-              Add Post To Home Page
+              Index Post
             </button>
-          )}
+          ) : null}
+
+          {isEdit && singlePost && singlePost.is_selected ? (
+            <button
+              className="bg-red-500 hover:bg-opacity-40 text-sm w-fit text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              onClick={handleSelect}
+              disabled={!isEdit || !singlePost || selectMutation.isLoading}
+            >
+              UnIndex Post
+            </button>
+          ) : null}
 
           {isEdit && singlePost && !singlePost?.is_published ? (
             <button
-              className="bg-green-500 text-sm w-fit  text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              className="bg-green-500 hover:bg-opacity-40 text-sm w-fit  text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
               onClick={handlePublish}
               disabled={!isEdit || !singlePost || publishMutation.isLoading}
             >
               Publish
+            </button>
+          ) : null}
+
+          {isEdit && singlePost && singlePost?.is_published ? (
+            <button
+              className="bg-red-500 hover:bg-opacity-40 text-sm w-fit  text-white transition duration-300 min-w-[15rem]  rounded-md px-8 py-2.5 font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+              onClick={handlePublish}
+              disabled={!isEdit || !singlePost || publishMutation.isLoading}
+            >
+              Unpublish Post
             </button>
           ) : null}
         </div>

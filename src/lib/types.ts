@@ -132,6 +132,7 @@ export interface QuestionnaireQualifierType {
 export interface NewsletterType {
   id: number;
   email: string;
+  fullname: string;
   created_at: string;
   updated_at: string;
 }

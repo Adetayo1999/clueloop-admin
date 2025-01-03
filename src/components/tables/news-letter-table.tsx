@@ -35,6 +35,10 @@ export const NewsletterTable = () => {
       header: "Email",
       cell: (info) => <p>{info.getValue()}</p>,
     }),
+    columnHelper.accessor("fullname", {
+      header: "Fullname",
+      cell: (info) => <p>{info.getValue() || "NIL"}</p>,
+    }),
     columnHelper.accessor("created_at", {
       header: "Date Submitted",
       cell: (info) => <p>{formatDate(info.getValue())}</p>,
