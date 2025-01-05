@@ -12,7 +12,7 @@ type props = {
 };
 
 function CenterModal({ children, className, containerClassName }: props) {
-  const { setModalContent } = useModal();
+  // const { setModalContent } = useModal();
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -28,7 +28,7 @@ function CenterModal({ children, className, containerClassName }: props) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={() => setModalContent(null)}
+        // onClick={() => setModalContent(null)}
         className={clsx(
           "min-h-screen fixed top-0 left-0 z-[25] overflow-y-auto  h-full w-full p-12 bg-black bg-opacity-40 dark:bg-opacity-80",
           containerClassName

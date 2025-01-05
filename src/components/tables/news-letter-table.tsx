@@ -49,6 +49,7 @@ export const NewsletterTable = () => {
     const dataToExport = data.map((item) => ({
       ID: item.id,
       Email: item.email,
+      Name: item.fullname,
       "Date Submitted": formatDate(item.created_at),
     }));
 

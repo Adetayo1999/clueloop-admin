@@ -72,6 +72,13 @@ export const CreateQuestionnaireQualifier: React.FC<{
   });
 
   const onSubmit: SubmitHandler<FormType> = async (values) => {
+    if (Number(values.minimum_percentage) > Number(values.maximum_percentage)) {
+      toast.error(
+        "minimum percentage should not be greater than maximum percentage"
+      );
+      return;
+    }
+
     if (isEdit && data) {
       ediMutation
         .mutateAsync({ ...values, id: data.id, _method: "put" })
@@ -146,7 +153,14 @@ export const CreateQuestionnaireQualifier: React.FC<{
 
           <CustomInput
             label="Enter qualifier action (Link)"
-            {...register("action", { required: true })}
+            {...register("action", {
+              required: true,
+              pattern: {
+                value:
+                  /^https:\/\/([\w\d\-]+\.)+[\w\d\-]+(\/[\w\d\-._~:/?#[\]@!$&'()*+,;=]*)?$/i,
+                message: "URL must start with https:// and be valid",
+              },
+            })}
             error={errors.action}
             placeholder="Enter qualifier action"
           />

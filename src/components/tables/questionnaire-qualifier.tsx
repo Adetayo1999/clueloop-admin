@@ -50,7 +50,7 @@ export const QuestionnaireQualifierTable = () => {
     },
 
     columnHelper.accessor(
-      (data) => `${data.maximum_percentage}% - ${data.minimum_percentage}%`,
+      (data) => `${data.minimum_percentage}% - ${data.maximum_percentage}%`,
       {
         header: "Qualifying Percentage Range",
         cell: (info) => <p>{info.getValue()}</p>,
