@@ -16,6 +16,8 @@ export interface CreatePostRequestBodyType {
   banner: File;
   authors: string;
   snippets: string;
+  action_text?: string;
+  question_category_id?: number;
 }
 
 export interface CreatePostCategoryRequestBodyType {
@@ -39,6 +41,8 @@ export interface EditPostRequestBodyType {
   user_id: number;
   id: number;
   banner?: File;
+  action_text?: string;
+  question_category_id?: number;
   _method: "put";
 }
 
@@ -96,14 +100,32 @@ export interface EditQuestionRequestBodyType {
 
 export interface CreateQuestionnaireQualifierRequestBodyType {
   description: string;
-  action: string;
+  action?: string | null;
   maximum_percentage: string;
   minimum_percentage: string;
   category_id: number;
+  action_text: string;
+  oppurtunity_id?: string | null;
 }
 
 export interface EditQuestionnaireQualiferRequestBodyType
   extends CreateQuestionnaireQualifierRequestBodyType {
   id: number;
   _method: "put";
+}
+
+export interface CreateOpportunityRequestBodyType {
+  title: string;
+  content: string;
+  action_link: string;
+  document_link: string;
+  banner: File;
+  snippets: string;
+}
+
+export interface EditOpportunityRequestBodyType
+  extends Omit<CreateOpportunityRequestBodyType, "banner"> {
+  id: number;
+  _method: "put";
+  banner?: File;
 }

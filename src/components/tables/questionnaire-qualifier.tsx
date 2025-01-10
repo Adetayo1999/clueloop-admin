@@ -62,7 +62,13 @@ export const QuestionnaireQualifierTable = () => {
     }),
     columnHelper.accessor("action", {
       header: "Qualifier Action",
-      cell: (info) => <p>{info.getValue()}</p>,
+      cell: (info) => (
+        <p>
+          {info.row.original.oppurtunity
+            ? `${info.row.original.oppurtunity.title} (Opportunity)`
+            : info.getValue() ?? "NIL"}
+        </p>
+      ),
     }),
     columnHelper.accessor("created_at", {
       header: "Date Created",

@@ -3,7 +3,11 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import CustomEditor from "../../../components/editor";
 import CustomInput from "../../../components/input";
 import CustomTextarea from "../../../components/textarea";
-import { PostCategoryType, PostType } from "../../../lib/types";
+import {
+  PostCategoryType,
+  PostType,
+  QuestionnaireType,
+} from "../../../lib/types";
 import services from "../../../services";
 import CustomSelect from "../../../components/custom-select";
 import { CloudArrowDownIcon, PhotoIcon } from "@heroicons/react/24/solid";
@@ -21,6 +25,8 @@ interface CreateBlogFormType {
   category_id: number;
   authors: string;
   snippets: string;
+  action_text?: string;
+  question_category_id?: number;
 }
 
 function isNumber(str: string) {
@@ -62,7 +68,10 @@ export const CreateBlog = () => {
     register,
     handleSubmit,
     setValue: setFormValue,
+    watch,
   } = useForm<CreateBlogFormType>();
+
+  const formValues = watch();
 
   const { data, isLoading: postCategoryLoading } = useQuery<PostCategoryType[]>(
     ["postCategories"],
@@ -71,6 +80,15 @@ export const CreateBlog = () => {
       refetchOnWindowFocus: false,
     }
   );
+
+  const { data: questionniareData, isLoading: questionnaireDataLoading } =
+    useQuery<QuestionnaireType[]>(
+      ["questionnaire"],
+      services.getQuestionnaires,
+      {
+        refetchOnWindowFocus: false,
+      }
+    );
 
   const mutation = useMutation({
     mutationFn: services.createPost,
@@ -132,12 +150,25 @@ export const CreateBlog = () => {
       setFormValue("authors", singlePost.authors);
       setFormValue("snippets", singlePost.snippets);
       setValue(singlePost.content);
+      setFormValue("action_text", singlePost?.action_text || undefined);
+      setFormValue(
+        "question_category_id",
+        singlePost?.question_category_id || undefined
+      );
+
       setImagePreview(singlePost.banner);
     }
   }, [isEdit, singlePost, setFormValue]);
 
   const formattedPostCategory = data
     ? data.map((item) => ({ label: item.name, value: item.id.toString() }))
+    : [];
+
+  const formattedQuestionnaires = questionniareData
+    ? questionniareData.map((item) => ({
+        label: item.name,
+        value: item.id.toString(),
+      }))
     : [];
 
   const onImageDrop = (files: File[], rejectedFiles: FileRejection[]) => {
@@ -261,6 +292,7 @@ export const CreateBlog = () => {
             rows={5}
             {...register("snippets", { required: true })}
           />
+
           <CustomSelect
             label="Post Category"
             options={[
@@ -268,6 +300,25 @@ export const CreateBlog = () => {
               ...formattedPostCategory,
             ]}
             {...register("category_id", { required: true })}
+          />
+
+          <CustomSelect
+            label="Select Assessment (Optional)"
+            options={[
+              { label: "Select Assessment", value: "" },
+              ...formattedQuestionnaires,
+            ]}
+            {...register("question_category_id", {
+              required: Boolean(formValues.action_text),
+            })}
+          />
+
+          <CustomInput
+            label="Assessment Button CTA (Optional)"
+            placeholder="Enter CTA for assessment"
+            {...register("action_text", {
+              required: Boolean(formValues.question_category_id),
+            })}
           />
 
           <div className="flex flex-col gap-y-2 mb-1">
@@ -338,7 +389,8 @@ export const CreateBlog = () => {
                 mutation.isLoading ||
                 postCategoryLoading ||
                 !data ||
-                singlePostLoading
+                singlePostLoading ||
+                questionnaireDataLoading
               }
             >
               {mutation.isLoading || editMutation.isLoading

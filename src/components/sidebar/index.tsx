@@ -10,6 +10,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { paths } from "../../routes/paths";
 import { clearUserData, clearUserToken } from "../../lib/storage";
 import toast from "react-hot-toast";
+import { GlobeEuropeAfricaIcon } from "@heroicons/react/24/solid";
 
 export const DashboardSidebar = () => {
   const location = useLocation();
@@ -53,6 +54,14 @@ export const DashboardSidebar = () => {
                   this.path === location.pathname ||
                   location.pathname === paths.dashboard.blogs_category
                 );
+              },
+            },
+            {
+              title: "Opportunities",
+              Icon: GlobeEuropeAfricaIcon,
+              path: paths.dashboard.opportunities,
+              isActive() {
+                return this.path === location.pathname;
               },
             },
             {

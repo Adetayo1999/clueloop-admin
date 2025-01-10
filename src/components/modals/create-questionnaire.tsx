@@ -16,9 +16,11 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 import CustomDropzone from "../custom-dropdown";
-import CustomSelect from "../custom-select";
 
-type FormType = Omit<QuestionnaireType, "id" | "created_at" | "updated_at">;
+type FormType = Omit<
+  QuestionnaireType,
+  "id" | "created_at" | "updated_at" | "type"
+>;
 
 const DEFAULT_IMAGE_URL =
   "https://clueloop.quickgeosearch.com.ng/images/default-banner.jpg";
@@ -74,7 +76,13 @@ export const CreateQuestionnaire: React.FC<{
   const onSubmit: SubmitHandler<FormType> = async (values) => {
     if (isEdit && data) {
       ediMutation
-        .mutateAsync({ ...values, id: data.id, _method: "put", banner })
+        .mutateAsync({
+          ...values,
+          id: data.id,
+          _method: "put",
+          banner,
+          type: "Assessment",
+        })
         .then(() => {
           toast.success("questionnaire updated successfully");
         })
@@ -95,7 +103,7 @@ export const CreateQuestionnaire: React.FC<{
     }
 
     createMutation
-      .mutateAsync({ ...values, banner })
+      .mutateAsync({ ...values, banner, type: "Assessment" })
       .then(() => {
         toast.success("questionnaire created successfully");
       })
@@ -162,25 +170,6 @@ export const CreateQuestionnaire: React.FC<{
             {...register("name", { required: true })}
             error={errors.name}
             placeholder="Enter questionnaire name"
-          />
-          <CustomSelect
-            label="Choose questionnaire Type"
-            {...register("type", { required: true })}
-            error={errors.type}
-            options={[
-              {
-                label: "Choose type",
-                value: "",
-              },
-              {
-                label: "Assessment",
-                value: "Assessment",
-              },
-              {
-                label: "Opportunity",
-                value: "Opportunity",
-              },
-            ]}
           />
 
           <CustomTextarea

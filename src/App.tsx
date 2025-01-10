@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import { ProtectedLayout } from "./components/layout/protected.layout";
 import { paths } from "./routes/paths";
 import { PostsLayout } from "./components/layout/posts.layout";
@@ -24,6 +24,12 @@ const QuestionnaireQualifier = lazy(
   () => import("./modules/dashboard/qualifier")
 );
 const NewsletterPage = lazy(() => import("./modules/dashboard/newsletter"));
+const OpportunitiesPage = lazy(
+  () => import("./modules/dashboard/opportunities")
+);
+const CreateOpportunityPage = lazy(
+  () => import("./modules/dashboard/create-opportunity")
+);
 
 function App() {
   return (
@@ -71,6 +77,26 @@ function App() {
             element={
               <React.Suspense fallback={<p>Loading....</p>}>
                 <CreateBlog />
+              </React.Suspense>
+            }
+          />
+        </Route>
+
+        {/* Opportunity Layout */}
+        <Route element={<Outlet />}>
+          <Route
+            path={paths.dashboard.create_opportunity}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <CreateOpportunityPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={paths.dashboard.opportunities}
+            element={
+              <React.Suspense fallback={<p>Loading....</p>}>
+                <OpportunitiesPage />
               </React.Suspense>
             }
           />

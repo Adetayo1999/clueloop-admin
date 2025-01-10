@@ -14,5 +14,7 @@ export const paths = {
     responses: "/questionnaires/:id/responses",
     qualifiers: "/questionnaires/qualifiers",
     newsletter: "/newsletter",
+    create_opportunity: "/opportunities/:id",
+    opportunities: "/opportunities",
   },
 };

@@ -233,6 +233,40 @@ const services = {
     const { method, url } = endpoints.dashboard.newsletter.get;
     return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
   },
+
+  async getOpportunities() {
+    const { method, url } = endpoints.dashboard.opportunity.get;
+
+    return makeAuthorizedRequestWithHeadersAndPayload(method, url, {});
+  },
+
+  async getSingleOpportunity(id: number) {
+    const { method, url } = endpoints.dashboard.opportunity.get_single;
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(id.toString()),
+      {}
+    );
+  },
+
+  async createOpportunity(data: types.CreateOpportunityRequestBodyType) {
+    const { method, url } = endpoints.dashboard.opportunity.create;
+    return makeRequestWithFormData(method, url, data, true);
+  },
+
+  async updateOpportunity(data: types.EditOpportunityRequestBodyType) {
+    const { method, url } = endpoints.dashboard.opportunity.update;
+    return makeRequestWithFormData(method, url(data.id.toString()), data, true);
+  },
+
+  async deleteOpportunities(id: number) {
+    const { method, url } = endpoints.dashboard.opportunity.delete;
+    return makeAuthorizedRequestWithHeadersAndPayload(
+      method,
+      url(id.toString()),
+      {}
+    );
+  },
 };
 
 export default services;

@@ -43,6 +43,9 @@ export interface PostType {
   authors: string;
   snippets: string;
   is_selected: number;
+  action_text?: string;
+  question_category_id?: number;
+  question_category?: QuestionnaireType;
 }
 
 export interface EventType {
@@ -127,6 +130,9 @@ export interface QuestionnaireQualifierType {
   minimum_percentage: string;
   category_id: number;
   category: QuestionnaireType;
+  action_text: null | string;
+  oppurtunity_id: null | string;
+  oppurtunity: OpportunityType | null;
 }
 
 export interface NewsletterType {
@@ -135,4 +141,17 @@ export interface NewsletterType {
   fullname: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface OpportunityType {
+  id: number;
+  title: string;
+  content: string;
+  is_published: string;
+  action_link: string;
+  document_link: string;
+  created_at: string;
+  updated_at: string;
+  snippets: string;
+  banner: string;
 }

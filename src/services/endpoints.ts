@@ -173,5 +173,27 @@ export const endpoints = {
         url: "/news-letter",
       },
     },
+    opportunity: {
+      get: {
+        method: "GET",
+        url: "/oppurtunity",
+      },
+      create: {
+        method: "POST",
+        url: "/oppurtunity",
+      },
+      get_single: {
+        method: "GET",
+        url: (id: string) => `/oppurtunity/admin/${id}`,
+      },
+      update: {
+        method: "POST",
+        url: (id: string) => `/oppurtunity/${id}`,
+      },
+      delete: {
+        method: "DELETE",
+        url: (id: string) => `/oppurtunity/${id}`,
+      },
+    },
   },
 };
