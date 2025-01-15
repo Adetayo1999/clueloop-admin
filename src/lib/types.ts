@@ -154,4 +154,7 @@ export interface OpportunityType {
   updated_at: string;
   snippets: string;
   banner: string;
+  action_text: string;
+  document_text: string;
+  is_transition: number;
 }

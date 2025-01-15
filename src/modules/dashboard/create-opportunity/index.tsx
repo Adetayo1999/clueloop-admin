@@ -13,12 +13,16 @@ import { validate } from "uuid";
 import { paths } from "../../../routes/paths";
 import toast from "react-hot-toast";
 import CustomTextarea from "../../../components/textarea";
+import { URL_VALIDATION } from "../../../lib/validation";
+import { CustomToggle } from "../../../components/custom-toggle";
 
 interface CreateOpportunityFormType {
   title: string;
   action_link: string;
   document_link: string;
   snippets: string;
+  document_text: string;
+  action_text: string;
 }
 
 function isNumber(str: string) {
@@ -32,6 +36,7 @@ export default function CreateOpportunity() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isTransitionEnabled, setIsTransitionEnabled] = useState(false);
 
   const { data: singleOpportunity, isLoading: singleOpportunityLoading } =
     useQuery<OpportunityType>(
@@ -86,6 +91,9 @@ export default function CreateOpportunity() {
       setFormValue("action_link", singleOpportunity.action_link);
       setFormValue("document_link", singleOpportunity.document_link);
       setFormValue("snippets", singleOpportunity.snippets);
+      setFormValue("action_text", singleOpportunity.action_text);
+      setFormValue("document_text", singleOpportunity.document_text);
+      setIsTransitionEnabled(Boolean(singleOpportunity.is_transition));
       setValue(singleOpportunity.content);
       setImagePreview(singleOpportunity.banner);
     }
@@ -132,6 +140,7 @@ export default function CreateOpportunity() {
           content: value,
           _method: "put",
           banner: image,
+          is_transition: isTransitionEnabled ? "1" : "0",
         });
 
         toast.success("Opportunity edited successfully");
@@ -148,6 +157,7 @@ export default function CreateOpportunity() {
         ...data,
         content: value,
         banner: image,
+        is_transition: isTransitionEnabled ? "1" : "0",
       });
 
       toast.success("Opportunnity created successfully");
@@ -187,6 +197,7 @@ export default function CreateOpportunity() {
             placeholder="Enter title"
             {...register("title", { required: true })}
           />
+
           <CustomTextarea
             label="Description"
             placeholder="Enter a descroption for the opportunity"
@@ -194,15 +205,48 @@ export default function CreateOpportunity() {
             {...register("snippets", { required: true })}
           />
           <CustomInput
+            label="Action CTA Text"
+            placeholder="Enter Action CTA Text"
+            {...register("action_text", { required: true })}
+          />
+          <CustomInput
             label="Action Link"
             placeholder="Enter Action Link"
-            {...register("action_link", { required: true })}
+            {...register("action_link", {
+              required: true,
+              pattern: URL_VALIDATION,
+            })}
+          />
+          <CustomInput
+            label="Document CTA Text"
+            placeholder="Enter Document CTA Text"
+            {...register("document_text", { required: true })}
           />
           <CustomInput
             label="Document Link"
             placeholder="Enter document link"
-            {...register("document_link", { required: true })}
+            {...register("document_link", {
+              required: true,
+              pattern: URL_VALIDATION,
+            })}
           />
+          <div className="flex flex-col gap-y-2">
+            <label
+              className={clsx(
+                `text-sm font-semibold dark:text-gray-100 text-[#344054]`
+              )}
+            >
+              Enable Transition
+            </label>
+            <CustomToggle
+              defaultValue={
+                singleOpportunity
+                  ? Boolean(singleOpportunity.is_transition)
+                  : false
+              }
+              onChange={(state) => setIsTransitionEnabled(state)}
+            />
+          </div>
 
           <div className="flex flex-col gap-y-2 mb-1">
             <div className="">

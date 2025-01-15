@@ -121,6 +121,9 @@ export interface CreateOpportunityRequestBodyType {
   document_link: string;
   banner: File;
   snippets: string;
+  document_text: string;
+  action_text: string;
+  is_transition: "0" | "1";
 }
 
 export interface EditOpportunityRequestBodyType

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -73,14 +73,18 @@ const CustomEditor: React.FC<
     ],
   };
 
+  useEffect(() => {
+    if (ref.current) ref.current.focus();
+  }, []);
+
   return (
-    <div className="custom-editor z-[100000] relative">
+    <div className="custom-editor z-[100000] flex-gro  relative">
       <ReactQuill
         theme="snow"
         value={value}
         onChange={setValue}
         modules={modules}
-        className=" dark:text-white text-gray-800 border-none "
+        className=" dark:text-white text-gray-800  border-none "
         ref={ref}
         placeholder="Start typing..."
         {...props}
