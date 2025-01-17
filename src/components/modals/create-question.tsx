@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import { useModal } from "../../context/modal";
+import { errorFormatter } from "../../lib/format-error";
 
 interface FormType {
   title: string;
@@ -98,27 +99,24 @@ export const CreateQuestion: React.FC<{
         })
         .then(() => {
           toast.success("question updated successfully");
-        })
-        .catch(() => {
-          toast.error("something went wrong, try again");
-        })
-        .finally(() => {
           reset();
           setModalContent(null);
+        })
+        .catch((error) => {
+          toast.error(errorFormatter(error));
         });
+
       return;
     }
     createMutation
       .mutateAsync({ ...values, category_id })
       .then(() => {
         toast.success("questioncreated successfully");
-      })
-      .catch(() => {
-        toast.error("something went wrong, try again");
-      })
-      .finally(() => {
         reset();
         setModalContent(null);
+      })
+      .catch((error) => {
+        toast.error(errorFormatter(error));
       });
   };
 

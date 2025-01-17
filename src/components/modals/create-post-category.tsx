@@ -17,6 +17,7 @@ import CustomTextarea from "../textarea";
 import CustomDropzone from "../custom-dropdown";
 import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
+import { errorFormatter } from "../../lib/format-error";
 
 const DEFAULT_IMAGE_URL =
   "https://clueloop.quickgeosearch.com.ng/images/default-banner.jpg";
@@ -94,8 +95,8 @@ export const CreatePostCategory: React.FC<{
           reset();
           setModalContent(null);
         })
-        .catch(() => {
-          toast.error("something went wrong, try again");
+        .catch((error) => {
+          toast.error(errorFormatter(error));
         });
       return;
     }
@@ -109,8 +110,8 @@ export const CreatePostCategory: React.FC<{
         reset();
         setModalContent(null);
       })
-      .catch(() => {
-        toast.error("something went wrong, try again");
+      .catch((error) => {
+        toast.error(errorFormatter(error));
       });
   };
 

@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 import CustomDropzone from "../custom-dropdown";
+import { errorFormatter } from "../../lib/format-error";
 
 type FormType = Omit<
   QuestionnaireType,
@@ -85,13 +86,11 @@ export const CreateQuestionnaire: React.FC<{
         })
         .then(() => {
           toast.success("questionnaire updated successfully");
-        })
-        .catch(() => {
-          toast.error("something went wrong, try again");
-        })
-        .finally(() => {
           reset();
           setModalContent(null);
+        })
+        .catch((error) => {
+          toast.error(errorFormatter(error));
         });
 
       return;
@@ -106,13 +105,11 @@ export const CreateQuestionnaire: React.FC<{
       .mutateAsync({ ...values, banner, type: "Assessment" })
       .then(() => {
         toast.success("questionnaire created successfully");
-      })
-      .catch(() => {
-        toast.error("something went wrong, try again");
-      })
-      .finally(() => {
         reset();
         setModalContent(null);
+      })
+      .catch((error) => {
+        toast.error(errorFormatter(error));
       });
   };
 
