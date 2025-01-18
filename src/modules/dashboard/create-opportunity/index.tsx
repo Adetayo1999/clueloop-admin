@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import CustomTextarea from "../../../components/textarea";
 import { URL_VALIDATION } from "../../../lib/validation";
 import { CustomToggle } from "../../../components/custom-toggle";
+import { errorFormatter } from "../../../lib/format-error";
 
 interface CreateOpportunityFormType {
   title: string;
@@ -104,12 +105,9 @@ export default function CreateOpportunity() {
       const { file, errors } = rejectedFile;
       errors.forEach((error) => {
         if (error.code === "file-invalid-type") {
-          console.log(`File format not accepted: ${file.type}`, true);
+          toast.error(`File format not accepted: ${file.type}`);
         } else if (error.code === "file-too-large") {
-          console.log(
-            `File is too large: ${(file.size / 1024).toFixed(2)} KB`,
-            true
-          );
+          toast.error(`File is too large: ${(file.size / 1024).toFixed(2)} KB`);
         }
       });
     });
@@ -164,11 +162,7 @@ export default function CreateOpportunity() {
 
       navigate(paths.dashboard.create_opportunity.replace(":id", response.id));
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-        return;
-      }
-      toast.error("Something went wrong.");
+      toast.error(errorFormatter(error));
     }
   };
 

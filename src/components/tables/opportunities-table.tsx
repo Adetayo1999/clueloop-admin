@@ -74,11 +74,17 @@ export const OpportunityTable = () => {
     }),
     columnHelper.accessor("document_link", {
       header: "Document Link",
-      cell: (props) => <p>{props.getValue()}</p>,
+      cell: (props) => (
+        <p className="max-w-[40rem] whitespace-normal ">{props.getValue()}</p>
+      ),
     }),
     columnHelper.accessor("action_link", {
       header: "Action Link",
-      cell: (props) => <p>{props.getValue() || "NIL"}</p>,
+      cell: (props) => (
+        <p className="max-w-[40rem] whitespace-normal ">
+          {props.getValue() || "NIL"}
+        </p>
+      ),
     }),
     columnHelper.accessor("created_at", {
       header: "Date Created",
