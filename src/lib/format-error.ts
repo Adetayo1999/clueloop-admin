@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface ValidationErrorType {
   message: string;
   errors: Record<string, string[]>;
@@ -38,7 +39,7 @@ function isValidationErrorType(obj: unknown): obj is ValidationErrorType {
   return false;
 }
 
-export const errorFormatter = (error: unknown) => {
+export const errorFormatter = (error: any) => {
   let message = "";
 
   if (isValidationErrorType(error)) {
@@ -51,6 +52,8 @@ export const errorFormatter = (error: unknown) => {
           : (message += "\n" + item.join("\n"));
       });
     } else message = errorLocal.message;
+  } else if (typeof error === "object" && typeof error?.message === "string") {
+    message = error.message;
   } else if (error instanceof Error) message = error.message;
   else message = "Something went wrong...";
 
