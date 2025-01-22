@@ -199,26 +199,26 @@ export default function CreateOpportunity() {
             {...register("snippets", { required: true })}
           />
           <CustomInput
-            label="Action CTA Text"
-            placeholder="Enter Action CTA Text"
+            label="First State "
+            placeholder="Enter First State Text"
             {...register("action_text", { required: true })}
           />
           <CustomInput
-            label="Action Link"
-            placeholder="Enter Action Link"
+            label="Label 1 (Link)"
+            placeholder="Enter Label 1 Link"
             {...register("action_link", {
               required: true,
               pattern: URL_VALIDATION,
             })}
           />
           <CustomInput
-            label="Document CTA Text"
-            placeholder="Enter Document CTA Text"
+            label="Second State"
+            placeholder="Enter Second State Text"
             {...register("document_text", { required: true })}
           />
           <CustomInput
-            label="Document Link"
-            placeholder="Enter document link"
+            label="Label 2 (Link)"
+            placeholder="Enter Label 2 Link"
             {...register("document_link", {
               required: true,
               pattern: URL_VALIDATION,
