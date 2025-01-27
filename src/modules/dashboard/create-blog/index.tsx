@@ -19,6 +19,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { validate } from "uuid";
 import { paths } from "../../../routes/paths";
 import toast from "react-hot-toast";
+import { MAX_IMAGE_UPLOAD } from "../../../lib/const";
 
 interface CreateBlogFormType {
   title: string;
@@ -378,6 +379,12 @@ export const CreateBlog = () => {
                   </div>
                 )}
               </div>
+            </div>
+            <div className="">
+              <span className="text-xs text-gray-500 font-medium ">
+                Maximum {(MAX_IMAGE_UPLOAD / (1024 * 1024)).toFixed(0)}MB size
+                allowed.
+              </span>
             </div>
           </div>
 

@@ -7,3 +7,5 @@ export const STORAGE_KEYS = {
 };
 
 export const REQUEST_TIMEOUT = 100000;
+
+export const MAX_IMAGE_UPLOAD = 5242880;

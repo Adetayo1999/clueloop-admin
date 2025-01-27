@@ -57,7 +57,7 @@ export const QuestionnaireQualifierTable = () => {
       }
     ),
     columnHelper.accessor("category", {
-      header: "Questionnaire Title",
+      header: "Assessment Title",
       cell: (info) => <p>{info.getValue()?.name || "NIL"}</p>,
     }),
     columnHelper.accessor("action", {
@@ -88,7 +88,7 @@ export const QuestionnaireQualifierTable = () => {
             onClick={() =>
               setModalContent(
                 <DeleteDialogModal
-                  title="Delete Questionnaire Qualifier"
+                  title="Delete Assessment Qualifier"
                   actionHandler={() =>
                     handleDeleteQualifier(info.row.original.id)
                   }

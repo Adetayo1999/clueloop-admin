@@ -58,14 +58,14 @@ export const QuestionnairesTable = () => {
     },
 
     columnHelper.accessor("name", {
-      header: "Questionnaire Title",
+      header: "Assessment Title",
       cell: (info) => (
         <p className="w-[10rem]  whitespace-normal">{info.getValue()}</p>
       ),
     }),
 
     columnHelper.accessor(() => "link", {
-      header: "Questionnaire Link",
+      header: "Assessment Link",
       cell: (info) => (
         <Link
           to={`https://clueloop-6jqz.vercel.app/assessment?id=${info.row.original.id}`}
@@ -100,8 +100,8 @@ export const QuestionnairesTable = () => {
             onClick={() =>
               setModalContent(
                 <DeleteDialogModal
-                  title="Delete Questionnaire"
-                  description="This questionnaire and all questions under it will be deleted. Are you sure you want to continue ?"
+                  title="Delete Assessment"
+                  description="This assessment and all questions under it will be deleted. Are you sure you want to continue ?"
                   actionHandler={() =>
                     handleDeleteQuestionnaire(info.row.original.id)
                   }
@@ -123,7 +123,7 @@ export const QuestionnairesTable = () => {
           </button>
           <button
             className="bg-yellow-600 h-[2.5rem]  duration-100 transition px-4 py-2 rounded-md flex justify-center items-center"
-            title="View Questionnaire"
+            title="View Assessment"
             onClick={() =>
               navigate(
                 paths.dashboard.quesitons.replace(

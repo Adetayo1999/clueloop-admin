@@ -65,7 +65,7 @@ export const QuestionnaireResponsesTable = () => {
       "Date Submitted": formatDate(item.created_at),
     }));
 
-    exportToExcel(dataToExport, "questionniare_response");
+    exportToExcel(dataToExport, "assessment_response");
   };
 
   // Dynamic columns for questions and answers
@@ -155,7 +155,7 @@ export const QuestionnaireResponsesTable = () => {
             </button>
             <h3 className="font-semibold text-gray-800 dark:text-gray-50 text-xl">
               {data && data.category.length ? data.category[0].name + "'s" : ""}{" "}
-              Questionnaire Responses
+              Assessment Responses
             </h3>
           </div>
           <Button

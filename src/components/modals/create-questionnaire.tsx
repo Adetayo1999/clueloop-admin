@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 import CustomDropzone from "../custom-dropdown";
 import { errorFormatter } from "../../lib/format-error";
+import { MAX_IMAGE_UPLOAD } from "../../lib/const";
 
 type FormType = Omit<
   QuestionnaireType,
@@ -85,7 +86,7 @@ export const CreateQuestionnaire: React.FC<{
           type: "Assessment",
         })
         .then(() => {
-          toast.success("questionnaire updated successfully");
+          toast.success("Assessment updated successfully");
           reset();
           setModalContent(null);
         })
@@ -104,7 +105,7 @@ export const CreateQuestionnaire: React.FC<{
     createMutation
       .mutateAsync({ ...values, banner, type: "Assessment" })
       .then(() => {
-        toast.success("questionnaire created successfully");
+        toast.success("Assessment created successfully");
         reset();
         setModalContent(null);
       })
@@ -122,7 +123,7 @@ export const CreateQuestionnaire: React.FC<{
   return (
     <div className="">
       <ModalHeaderContainer>
-        <ModalTitle title="Create Questionnaire" />
+        <ModalTitle title="Create Assessment" />
         <ModalCloseButton />
       </ModalHeaderContainer>
       <ModalBodyContainer>
@@ -130,7 +131,7 @@ export const CreateQuestionnaire: React.FC<{
           className="flex flex-col gap-y-8"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-row  gap-x-5">
+          <div className="flex flex-row  gap-x-5 h-[12rem]">
             <div className="flex-[0.4] flex-shrink-0">
               <CustomDropzone
                 accept={{
@@ -140,7 +141,7 @@ export const CreateQuestionnaire: React.FC<{
                 }}
                 name="banner"
                 className="border border-[#0052FF1A] h-full"
-                maxSize={1500000}
+                maxSize={MAX_IMAGE_UPLOAD}
                 onDrop={onImageDrop}
                 maxFiles={1}
                 required={
@@ -152,7 +153,7 @@ export const CreateQuestionnaire: React.FC<{
                 }
               />
             </div>
-            <div className="rounded overflow-hidden dark:border-gray-500 dark:border-opacity-40   h-[10rem] border flex-[0.6]">
+            <div className="rounded overflow-hidden dark:border-gray-500 dark:border-opacity-40   border flex-[0.6]">
               {imagePreview && (
                 <img
                   src={imagePreview}
@@ -163,17 +164,17 @@ export const CreateQuestionnaire: React.FC<{
             </div>
           </div>
           <CustomInput
-            label="Enter questionnaire name"
+            label="Enter assessment name"
             {...register("name", { required: true })}
             error={errors.name}
-            placeholder="Enter questionnaire name"
+            placeholder="Enter assessment name"
           />
 
           <CustomTextarea
-            label="Enter questionnaire description"
+            label="Enter assessment description"
             {...register("description", { required: true })}
             error={errors.description}
-            placeholder="Enter questionnaire description"
+            placeholder="Enter assessment description"
             rows={5}
           />
 

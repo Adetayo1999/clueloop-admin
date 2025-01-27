@@ -161,7 +161,7 @@ export const CreateQuestionnaireQualifier: React.FC<{
   return (
     <div className="">
       <ModalHeaderContainer>
-        <ModalTitle title="Create Questionnaire Qualifier" />
+        <ModalTitle title="Create Assessment Qualifier" />
         <ModalCloseButton />
       </ModalHeaderContainer>
       <ModalBodyContainer className="">
@@ -172,10 +172,10 @@ export const CreateQuestionnaireQualifier: React.FC<{
           <div className="grid grid-cols-2 gap-y-8 gap-x-6">
             <CustomSelect
               options={[
-                { label: "Select questionnaire", value: "" },
+                { label: "Select assessment", value: "" },
                 ...formattedQuestionnaires,
               ]}
-              label="Enter questionnaire"
+              label="Enter Assessment"
               {...register("category_id", { required: true })}
               error={errors.category_id}
             />

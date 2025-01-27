@@ -47,7 +47,7 @@ function CustomDropzone({
   return (
     <div
       {...getRootProps({
-        className: `min-h-[10rem] flex justify-center items-center p-6   border border-dashed bg-[#F6F6F6] dark:bg-black  rounded ${className}`,
+        className: `min-h-[10rem] flex flex-col gap-y-3 justify-center items-center p-6   border border-dashed bg-[#F6F6F6] dark:bg-black  rounded ${className}`,
       })}
     >
       <input className="input-zone  " {...getInputProps({ name, required })} />
@@ -81,6 +81,11 @@ function CustomDropzone({
           </div>
         )}
       </div>
+      {maxSize && (
+        <span className="text-xs text-gray-500 font-medium ">
+          Maximum {(maxSize / (1024 * 1024)).toFixed(0)}MB characters allowed.
+        </span>
+      )}
     </div>
   );
 }

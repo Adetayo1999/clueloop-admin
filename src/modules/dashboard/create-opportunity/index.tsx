@@ -16,6 +16,7 @@ import CustomTextarea from "../../../components/textarea";
 import { URL_VALIDATION } from "../../../lib/validation";
 import { CustomToggle } from "../../../components/custom-toggle";
 import { errorFormatter } from "../../../lib/format-error";
+import { MAX_IMAGE_UPLOAD } from "../../../lib/const";
 
 interface CreateOpportunityFormType {
   title: string;
@@ -126,7 +127,7 @@ export default function CreateOpportunity() {
       "image/jpg": [".jpg"],
     },
     onDrop: onImageDrop,
-    maxSize: 1500000,
+    maxSize: MAX_IMAGE_UPLOAD,
   });
 
   const onSubmit: SubmitHandler<CreateOpportunityFormType> = async (data) => {
@@ -299,6 +300,12 @@ export default function CreateOpportunity() {
                   </div>
                 )}
               </div>
+            </div>
+            <div className="">
+              <span className="text-xs text-gray-500 font-medium ">
+                Maximum {(MAX_IMAGE_UPLOAD / (1024 * 1024)).toFixed(0)}MB size
+                allowed.
+              </span>
             </div>
           </div>
 

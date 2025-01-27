@@ -7,6 +7,7 @@ interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string | React.ReactNode;
   error?: FieldError;
   showError?: boolean;
+  maxChars?: number;
 }
 
 const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
@@ -19,6 +20,7 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
       name,
       required,
       showError = true,
+      maxChars = 255,
       ...rest
     },
     ref: React.ForwardedRef<HTMLInputElement>
@@ -83,9 +85,13 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef(
         </div>
         {showError && (
           <div className="h-4 mt-1">
-            {error && (
+            {error ? (
               <span className="text-xs text-red-500 font-bold">
                 {error.message || "field required"}
+              </span>
+            ) : (
+              <span className="text-xs text-gray-500 font-medium ">
+                Maximum {maxChars} characters allowed.
               </span>
             )}
           </div>

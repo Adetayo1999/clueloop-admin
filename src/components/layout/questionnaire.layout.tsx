@@ -20,19 +20,19 @@ export const QuestionnaireLayout = () => {
     <div className="p-12 pt-16">
       <div className="mb-10">
         <h1 className="text-2xl mb-6 md:text-4xl 2xl:text-3xl font-semibold text-gray-800 dark:text-gray-50">
-          Questionnaires
+          Assessments
         </h1>
 
         <div className="flex justify-between items-center">
           <div className="flex gap-x-5 items-center">
             {[
               {
-                title: "Questionnaire Category",
+                title: "Assessment Category",
                 Icon: ClipboardDocumentListIcon,
                 path: paths.dashboard.questionnaires,
               },
               {
-                title: "Questionnaire Qualifiers",
+                title: "Assessment Qualifiers",
                 Icon: ClipboardDocumentListIcon,
                 path: paths.dashboard.qualifiers,
               },
@@ -65,7 +65,7 @@ export const QuestionnaireLayout = () => {
                 <span>
                   <PlusIcon className="size-5" />
                 </span>
-                <span>Create Questionnaire</span>
+                <span>Create Assessment</span>
               </Button>
             )}
             {location.pathname === paths.dashboard.qualifiers && (

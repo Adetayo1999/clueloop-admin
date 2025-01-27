@@ -18,6 +18,7 @@ import CustomDropzone from "../custom-dropdown";
 import { useEffect, useState } from "react";
 import { FileRejection } from "react-dropzone";
 import { errorFormatter } from "../../lib/format-error";
+import { MAX_IMAGE_UPLOAD } from "../../lib/const";
 
 const DEFAULT_IMAGE_URL =
   "https://clueloop.quickgeosearch.com.ng/images/default-banner.jpg";
@@ -132,7 +133,7 @@ export const CreatePostCategory: React.FC<{
           className="flex flex-col gap-y-8"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-row  gap-x-5">
+          <div className="flex flex-row  gap-x-5 h-[12rem]">
             <div className="flex-[0.4] flex-shrink-0">
               <CustomDropzone
                 accept={{
@@ -142,7 +143,7 @@ export const CreatePostCategory: React.FC<{
                 }}
                 name="banner"
                 className="border border-[#0052FF1A] h-full"
-                maxSize={1500000}
+                maxSize={MAX_IMAGE_UPLOAD}
                 onDrop={onImageDrop}
                 maxFiles={1}
                 required={
@@ -154,7 +155,7 @@ export const CreatePostCategory: React.FC<{
                 }
               />
             </div>
-            <div className="rounded overflow-hidden dark:border-gray-500 dark:border-opacity-40   h-[10rem] border flex-[0.6]">
+            <div className="rounded overflow-hidden dark:border-gray-500 dark:border-opacity-40     border flex-[0.6]">
               {imagePreview && (
                 <img
                   src={imagePreview}

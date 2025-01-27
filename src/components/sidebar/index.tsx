@@ -76,7 +76,7 @@ export const DashboardSidebar = () => {
               },
             },
             {
-              title: "Questionnaires",
+              title: "Assessments",
               Icon: UserGroupIcon,
               path: paths.dashboard.questionnaires,
               isActive() {

@@ -111,7 +111,7 @@ export const CreateQuestion: React.FC<{
     createMutation
       .mutateAsync({ ...values, category_id })
       .then(() => {
-        toast.success("questioncreated successfully");
+        toast.success("question created successfully");
         reset();
         setModalContent(null);
       })

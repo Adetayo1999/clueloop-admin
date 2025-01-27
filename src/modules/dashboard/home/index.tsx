@@ -50,7 +50,7 @@ export default function Home() {
         />
         <DashboardCard
           metric={questionnaireData?.length || 0}
-          title="Total Questionnaires"
+          title="Total Assessments"
           Icon={UserGroupIcon}
         />
       </div>
