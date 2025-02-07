@@ -292,6 +292,7 @@ export const CreateBlog = () => {
             placeholder="Enter post description"
             rows={5}
             {...register("snippets", { required: true })}
+            maxLength={450}
           />
 
           <CustomSelect

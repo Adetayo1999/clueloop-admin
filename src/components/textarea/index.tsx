@@ -10,7 +10,7 @@ interface CustomTextareaProps
 
 const CustomTextarea: React.FC<CustomTextareaProps> = React.forwardRef(
   (
-    { label, className, error, required, ...rest },
+    { label, className, error, required, value, maxLength, ...rest },
     ref: React.ForwardedRef<HTMLTextAreaElement>
   ) => {
     const renderInputLabel = () => {
@@ -32,7 +32,7 @@ const CustomTextarea: React.FC<CustomTextareaProps> = React.forwardRef(
 
     return (
       <div>
-        <div className="flex flex-col gap-y-2 mb-1">
+        <div className="flex flex-col gap-y-2">
           {label && renderInputLabel()}
           <div className="relative">
             <textarea
@@ -41,17 +41,23 @@ const CustomTextarea: React.FC<CustomTextareaProps> = React.forwardRef(
                 "border-[#CBD5E1] dark:border-gray-500 dark:border-opacity-50  dark:text-white focus:ring-2 focus:ring-primary focus:ring-opacity-40",
                 className
               )}
+              value={value}
+              maxLength={maxLength}
               {...rest}
               ref={ref}
             ></textarea>
           </div>
         </div>
         <div className="h-4">
-          {error && (
+          {error ? (
             <span className="text-xs text-red-500 font-bold">
               {error.message || "field required"}
             </span>
-          )}
+          ) : maxLength ? (
+            <span className="text-xs text-gray-500 font-medium ">
+              Maximum {maxLength} characters allowed.
+            </span>
+          ) : null}
         </div>
       </div>
     );
