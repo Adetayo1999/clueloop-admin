@@ -68,11 +68,11 @@ export const QuestionnairesTable = () => {
       header: "Assessment Link",
       cell: (info) => (
         <Link
-          to={`https://clueloop-6jqz.vercel.app/assessment?id=${info.row.original.id}`}
+          to={`https://clueloop.com//assessment?id=${info.row.original.id}`}
           target="_blank"
           className="underline"
         >
-          https://clueloop-6jqz.vercel.app/assessment?id={info.row.original.id}
+          https://clueloop.com/assessment?id={info.row.original.id}
         </Link>
       ),
     }),
